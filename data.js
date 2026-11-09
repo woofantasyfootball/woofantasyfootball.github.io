@@ -1,0 +1,149 @@
+/* ===== Woo Fantasy League data. ESPN league 848216391, pulled Nov 9 2026, plus the league history doc. ===== */
+const MANAGERS = {
+  sop:   { name: "Sop",   full: "Michael Sopko",      aka: "" ,   div: "East" },
+  kurt:  { name: "Kurt",  full: "Kurt Sommerfeld",    aka: "",    div: "West" },
+  sam:   { name: "Sam",   full: "Sam Ball",           aka: "",    div: "East" },
+  paul:  { name: "Paul",  full: "Paul Litrenta",      aka: "",    div: "West" },
+  rob:   { name: "Rob",   full: "Robert Glies",       aka: "Roj", div: "East" },
+  jaxon: { name: "Jaxon", full: "Jaxon Mozzocio",     aka: "Doug",div: "West" },
+  jp:    { name: "JP",    full: "Johnpaul Mozzocio",  aka: "",    div: "East" },
+  dom:   { name: "Dom",   full: "Dom Rocca",          aka: "",    div: "West" },
+  sebas: { name: "Sebas", full: "Sebas Cour",         aka: "Bass",div: "East" },
+  ron:   { name: "Ron",   full: "Ronnie DeMase",      aka: "",    div: "West" }
+};
+const ORDER = ["sop","kurt","sam","paul","rob","jaxon","jp","dom","sebas","ron"];
+
+/* Season standings from ESPN: [manager, team name, W, L, PF, PA, playoff seed, final rank] */
+const STANDINGS = {
+  2021: [["sop","Sops RaftusBeerNelk",8,6,1764.66,1708.92,4,5],["kurt","Fat Hairy Prick",11,3,1820.5,1632.5,1,4],["sam","Team Ball",5,9,1653.92,1721.62,8,8],["paul","Vern Cinameet",9,5,1704.8,1619.76,3,3],["rob","Get Swifty",6,8,1784.16,1833.32,6,6],["jaxon","DK's Large Tasty Stromboli",5,9,1576.68,1618.7,10,9],["jp","The Gaunlet",8,6,1598.8,1651.58,5,1],["dom","Two girls one kupp",5,9,1747.1,1835.7,7,7],["sebas","Baslords Fartpoops",8,6,1783.58,1648.94,2,2],["ron","Hill Be Stopped",5,9,1582.74,1745.9,9,10]],
+  2022: [["sop","Sop's RaftusBeerNelk",5,9,1592.92,1621.24,9,9],["kurt","Fat Hairy Chubb",7,7,1683.56,1655.64,6,5],["sam","Team Ball",5,9,1603.76,1707.18,8,8],["paul","Rock Solid Coćk",4,10,1561.34,1686.18,10,7],["rob","Team Boog Schlizeti",6,8,1510.6,1636.94,7,10],["jaxon","spil yssup taf",11,3,1749.82,1546.82,1,4],["sebas","Ba$$Mans FartPoops",8,6,1665.04,1659.38,4,6],["ron","Hurts Doesnt It",7,7,1697.14,1713.26,5,2],["dom","King of the hill",8,6,1709.98,1710,3,3],["jp","King's Gaunlet",9,5,1705.82,1543.34,2,1]],
+  2023: [["sop","Sop's RaftusBeerNelk",4,10,1456.24,1691.82,8,7],["kurt","Stroke my Chubb",10,4,1608.12,1513.3,2,3],["sam","Team PAPA",3,11,1534.76,1814.28,10,8],["paul","Your Ass Hurts",7,7,1731.04,1702.12,5,1],["rob","Bijan Mustard",3,11,1605.8,1758.24,9,9],["jaxon","Jerryatric MFs",7,7,1671.06,1603.82,6,2],["sebas","Amon a Mission",10,4,1876.24,1709.76,3,6],["ron","Fanta Claus is Coming 2 Town",9,5,1762.62,1600.14,4,5],["dom","Easy pickens",6,8,1688.58,1720.4,7,10],["jp","The Infinity Stone Feelers",11,3,1749.3,1569.88,1,4]],
+  2024: [["sop","Sop's RaftusBeerNelk",8,6,1684,1694.3,4,5],["kurt","Just Cage Me",6,8,1788.84,1709.76,7,9],["sam","Team PAPA",7,7,1685.82,1703.48,5,4],["paul","Your Ass Hurts",7,7,1824.98,1678.28,2,3],["rob","Bijan Mustard",5,9,1670.12,1656.78,8,8],["jaxon","Dugg Slug",5,9,1642.06,1702.86,9,10],["sebas","Amon a Mission",11,3,1913.66,1668.7,1,2],["ron","Fanta Claus is Coming 2 Town",7,7,1504.46,1643.7,6,6],["dom","Easy pickens",5,9,1487.42,1823.1,10,7],["jp","The Infinity Stone Feelers",9,5,1680.8,1601.2,3,1]],
+  2025: [["sop","Sop's RaftusBeerNelk",11,3,1809.94,1574.52,1,1],["kurt","LAMBO",5,9,1527.1,1634.66,9,9],["sam","Team PAPA",6,8,1517.96,1609.8,8,10],["paul","Your Ass Hurts",6,8,1663.96,1644.1,6,2],["rob","Do it for Skat",10,4,1938.4,1634.16,3,5],["jaxon","Jack Me Goff",7,7,1554.46,1716.3,5,6],["sebas","Amon a Mission (kinda)",7,7,1653.5,1755.68,4,3],["ron","Fanta Claus Coming 2 Town",8,6,1653.22,1611.4,2,4],["dom","King of the hill",4,10,1527.4,1610.1,10,8],["jp","3Time",6,8,1618.38,1673.6,7,7]],
+  2026: [["sop","Ohio State University",5,3,1027.74,971.52,3,0],["kurt","Bada Bing",4,4,957.16,938.62,5,0],["sam","Team PAPA",4,4,938.22,879.52,7,0],["paul","WHEN THEY GO?",0,8,811.66,1073.92,10,0],["rob","Do it for Roj",4,4,949.22,936.1,6,0],["jaxon","#GILLMODE",5,3,1044.92,965.5,2,0],["sebas","Bomb Squad",3,5,981.4,993.46,9,0],["ron","Fantoween",4,4,959.96,979.86,4,0],["dom","Likely to lose",4,4,845.2,973.08,8,0],["jp","3Time",7,1,1088.94,892.84,1,0]]
+};
+
+/* Head to head, rows/cols in ORDER. "regW.regL.playoffW.playoffL" (playoffs = championship bracket only) */
+const H2H = {
+  sop:["0.0.0.0","2.3.0.0","9.2.0.1","7.2.1.0","5.6.0.0","2.4.0.0","4.7.0.1","4.4.0.0","5.6.1.0","3.3.0.0"],
+  kurt:["3.2.0.0","0.0.0.0","4.2.0.0","6.5.0.0","3.3.0.0","6.5.0.1","3.4.0.1","8.3.0.1","5.5.0.0","5.6.0.0"],
+  sam:["2.9.1.0","2.4.0.0","0.0.0.0","4.2.0.0","3.8.0.0","2.5.0.0","4.7.0.0","4.4.0.0","5.6.0.1","4.3.0.0"],
+  paul:["2.7.0.1","5.6.0.0","2.4.0.0","0.0.0.0","3.4.2.0","5.6.1.0","2.4.1.1","7.4.0.0","2.4.0.1","5.6.2.0"],
+  rob:["6.5.0.0","3.3.0.0","8.3.0.0","4.3.0.2","0.0.0.0","5.4.0.0","3.8.0.0","1.5.0.0","2.9.0.0","2.4.0.0"],
+  jaxon:["4.2.0.0","5.6.1.0","5.2.0.0","6.5.0.1","4.5.0.0","0.0.0.0","0.6.0.0","6.5.0.0","3.3.1.1","7.4.0.1"],
+  jp:["7.4.1.0","4.3.1.0","7.4.0.0","4.2.1.1","8.3.0.0","6.0.0.0","0.0.0.0","5.1.1.0","6.5.2.0","3.6.2.0"],
+  dom:["4.4.0.0","3.8.1.0","4.4.0.0","4.7.0.0","5.1.0.0","5.6.0.0","1.5.0.1","0.0.0.0","1.5.0.0","5.6.0.0"],
+  sebas:["6.5.0.1","5.5.0.0","6.5.1.0","4.2.1.0","9.2.0.0","3.3.1.1","5.6.0.2","5.1.0.0","0.0.0.0","4.2.0.1"],
+  ron:["3.3.0.0","6.5.0.0","3.4.0.0","6.5.0.2","4.2.0.0","4.7.1.0","6.3.0.2","6.5.0.0","2.4.1.0","0.0.0.0"]
+};
+/* Championship bracket record [W, L] 2021-2025 */
+const PLAYOFFS = { sop:[2,2], kurt:[0,3], sam:[1,1], paul:[6,3], rob:[0,2], jaxon:[2,3], jp:[8,1], dom:[1,1], sebas:[3,5], ron:[2,4] };
+/* All-play record (vs every team, every week), regular season 2021 through 2026 wk 8 */
+const ALLPLAY = { sop:[351,351], kurt:[357,345], sam:[297,405], paul:[357,345], rob:[355,347], jaxon:[342,360], jp:[373,329], dom:[320,382], sebas:[421,281], ron:[337,365] };
+/* Weekly highest and lowest score counts, regular season */
+const WEEK_HIGH = { sop:7, kurt:5, sam:6, paul:10, rob:8, jaxon:6, jp:11, dom:5, sebas:13, ron:7 };
+const WEEK_LOW  = { sop:9, kurt:4, sam:10, paul:6, rob:8, jaxon:9, jp:6, dom:8, sebas:4, ron:14 };
+
+/* Game lists: [year, week, R/P/C (regular, playoff, consolation), manager, team, points, opponent, opp points] */
+const TOP_SCORES = [[2021,14,"R","dom","Two girls one kupp",212.32,"sop",159.72],[2023,5,"R","rob","Bijan Mustard",193.28,"sebas",82.46],[2024,15,"P","sam","Team PAPA",192.38,"sop",144.62],[2024,9,"R","kurt","Just Cage Me",191.74,"dom",85.1],[2023,3,"R","ron","Fanta Claus is Coming 2 Town",181.38,"paul",166.78],[2024,14,"R","sam","Team PAPA",181.38,"dom",98.64],[2023,12,"R","sebas","Amon a Mission",179.56,"dom",145.24],[2024,16,"P","sebas","Amon a Mission",175.28,"sam",136.46],[2022,9,"R","sop","Sop's RaftusBeerNelk",174.22,"sam",106],[2025,10,"R","sop","Sop's RaftusBeerNelk",172.84,"jaxon",104.9]];
+const LOW_SCORES = [[2025,17,"C","sam","Team PAPA",38.8,"kurt",93],[2025,8,"R","jaxon","Jack Me Goff",52.48,"jp",98.58],[2022,17,"C","jaxon","spil yssup taf",55.4,"dom",120.18],[2023,9,"R","ron","Fanta Claus is Coming 2 Town",60.18,"jaxon",97.4],[2023,11,"R","sop","Sop's RaftusBeerNelk",60.3,"sebas",136.5],[2025,11,"R","ron","Fanta Claus Coming 2 Town",64,"paul",111.3],[2024,7,"R","ron","Fanta Claus is Coming 2 Town",65.66,"rob",132.94],[2022,11,"R","sop","Sop's RaftusBeerNelk",67.52,"rob",120.1],[2021,9,"R","paul","Vern Cinameet",67.74,"dom",106.04],[2024,11,"R","ron","Fanta Claus is Coming 2 Town",67.84,"paul",100.14]];
+const HIGH_LOSSES = [[2023,3,"R","paul","Your Ass Hurts",166.78,"ron",181.38],[2021,11,"R","sop","Sops RaftusBeerNelk",162.86,"rob",168.08],[2023,15,"P","sebas","Amon a Mission",161.26,"jaxon",163.3],[2021,14,"R","sop","Sops RaftusBeerNelk",159.72,"dom",212.32],[2022,2,"R","kurt","Fat Hairy Chubb",157.18,"sebas",161.08]];
+const LOW_WINS = [[2021,10,"R","jp","The Gaunlet",79.38,"jaxon",71.64],[2025,12,"R","kurt","LAMBO",87.92,"ron",87.62],[2025,1,"R","dom","King of the hill",88.24,"kurt",83.96],[2021,15,"P","paul","Vern Cinameet",89.2,"rob",84.34],[2023,17,"P","paul","Your Ass Hurts",89.58,"jaxon",80.6]];
+/* Margins: [year, week, type, winner, winner pts, loser, loser pts, margin] */
+const BLOWOUTS = [[2023,5,"R","rob",193.28,"sebas",82.46,110.82],[2024,9,"R","kurt",191.74,"dom",85.1,106.64],[2024,12,"R","sebas",158.98,"dom",72.92,86.06],[2024,14,"R","sam",181.38,"dom",98.64,82.74],[2026,8,"R","sebas",153.48,"dom",71.5,81.98],[2023,11,"R","sebas",136.5,"sop",60.3,76.2],[2023,4,"R","dom",147.9,"sam",73.58,74.32],[2023,13,"R","ron",172.26,"sam",98.38,73.88],[2021,16,"P","sebas",168.06,"paul",94.22,73.84],[2025,11,"R","jp",169.96,"sam",99.44,70.52]];
+const NAILBITERS = [[2024,3,"R","ron",152.58,"paul",152.54,0.04],[2025,17,"C","jp",101.3,"dom",101.14,0.16],[2025,2,"R","jp",124,"sam",123.78,0.22],[2022,17,"P","jp",129.52,"ron",129.26,0.26],[2021,10,"R","sop",98.14,"sebas",97.84,0.3],[2025,12,"R","kurt",87.92,"ron",87.62,0.3],[2021,7,"R","jp",117.72,"dom",117.24,0.48],[2023,16,"C","sop",135.72,"rob",134.8,0.92],[2021,2,"R","sop",115.3,"rob",114.32,0.98],[2021,10,"R","sam",114.08,"rob",113.1,0.98]];
+
+/* 2026 weekly results: [week, points, opponent, opp points] */
+const W26 = {
+  sop:[[1,157.42,"dom",111.6],[2,103.02,"rob",77.5],[3,146,"sam",130.78],[4,109.14,"jp",156.72],[5,147.56,"sebas",130.8],[6,125.5,"paul",77.22],[7,120.04,"ron",134.22],[8,119.06,"jaxon",152.68]],
+  kurt:[[1,155.86,"paul",97.02],[2,103.64,"jp",152.62],[3,95.74,"ron",99.88],[4,115.7,"dom",100.08],[5,166.86,"jaxon",137.2],[6,103.78,"rob",137.54],[7,114.9,"sebas",116.18],[8,100.68,"sam",98.1]],
+  sam:[[1,100.9,"jp",129.96],[2,127.48,"sebas",90.1],[3,130.78,"sop",146],[4,97.82,"rob",102.96],[5,142.46,"paul",121.48],[6,127.06,"ron",104.74],[7,113.62,"jaxon",83.6],[8,98.1,"kurt",100.68]],
+  paul:[[1,97.02,"kurt",155.86],[2,108.56,"ron",136.52],[3,108.72,"dom",113.78],[4,112.68,"jaxon",142.72],[5,121.48,"sam",142.46],[6,77.22,"sop",125.5],[7,94.28,"jp",130.52],[8,91.7,"rob",126.56]],
+  rob:[[1,135,"sebas",154.16],[2,77.5,"sop",103.02],[3,138.54,"jaxon",122.6],[4,102.96,"sam",97.82],[5,119,"jp",146.9],[6,137.54,"kurt",103.78],[7,112.12,"dom",116.12],[8,126.56,"paul",91.7]],
+  jaxon:[[1,141.56,"ron",112.56],[2,138.48,"dom",106.06],[3,122.6,"rob",138.54],[4,142.72,"paul",112.68],[5,137.2,"kurt",166.86],[6,126.08,"sebas",96.12],[7,83.6,"sam",113.62],[8,152.68,"sop",119.06]],
+  jp:[[1,129.96,"sam",100.9],[2,152.62,"kurt",103.64],[3,133.46,"sebas",116.64],[4,156.72,"sop",109.14],[5,146.9,"rob",119],[6,92.9,"dom",108.94],[7,130.52,"paul",94.28],[8,145.86,"ron",140.3]],
+  dom:[[1,111.6,"sop",157.42],[2,106.06,"jaxon",138.48],[3,113.78,"paul",108.72],[4,100.08,"kurt",115.7],[5,117.12,"ron",94.26],[6,108.94,"jp",92.9],[7,116.12,"rob",112.12],[8,71.5,"sebas",153.48]],
+  sebas:[[1,154.16,"rob",135],[2,90.1,"sam",127.48],[3,116.64,"jp",133.46],[4,123.92,"ron",137.48],[5,130.8,"sop",147.56],[6,96.12,"jaxon",126.08],[7,116.18,"kurt",114.9],[8,153.48,"dom",71.5]],
+  ron:[[1,112.56,"jaxon",141.56],[2,136.52,"paul",108.56],[3,99.88,"kurt",95.74],[4,137.48,"sebas",123.92],[5,94.26,"dom",117.12],[6,104.74,"sam",127.06],[7,134.22,"sop",120.04],[8,140.3,"jp",145.86]]
+};
+/* Remaining 2026 schedule: [week, home, away] */
+const SCHEDULE_26 = [[9,"sam","dom"],[9,"sop","sebas"],[9,"kurt","paul"],[9,"jp","rob"],[9,"jaxon","ron"],[10,"sop","kurt"],[10,"jp","sam"],[10,"dom","jaxon"],[10,"rob","sebas"],[10,"paul","ron"],[11,"jp","jaxon"],[11,"sop","rob"],[11,"ron","kurt"],[11,"sam","sebas"],[11,"paul","dom"],[12,"rob","ron"],[12,"sebas","jp"],[12,"jaxon","paul"],[12,"sam","sop"],[12,"kurt","dom"],[13,"sebas","paul"],[13,"rob","sam"],[13,"dom","ron"],[13,"jp","sop"],[13,"kurt","jaxon"],[14,"dom","sop"],[14,"kurt","jp"],[14,"jaxon","rob"],[14,"ron","sebas"],[14,"paul","sam"]];
+const CURRENT_WEEK = 9;
+
+/* From the league history doc */
+const BOWLS = [
+  { n:"I",   year:2021, w:{m:"jp",team:"Team Mozzocio",rec:"8-6",pts:128.22},           l:{m:"sebas",team:"Baslords Fartpoops",rec:"8-6",pts:115.9} },
+  { n:"II",  year:2022, w:{m:"jp",team:"King's Gauntlet",rec:"9-5",pts:129.52},         l:{m:"ron",team:"Hurts Doesn't It",rec:"7-7",pts:129.26} },
+  { n:"III", year:2023, w:{m:"paul",team:"Your Ass Hurts",rec:"7-7",pts:89.58},         l:{m:"jaxon",team:"Jerryatric MFs",rec:"7-7",pts:80.6} },
+  { n:"IV",  year:2024, w:{m:"jp",team:"The Infinity Stone Feelers",rec:"9-5",pts:131.74}, l:{m:"sebas",team:"Amon a Mission",rec:"11-3",pts:121.62} },
+  { n:"V",   year:2025, w:{m:"sop",team:"Sop's RaftusBeerNelk",rec:"11-3",pts:139.38},  l:{m:"paul",team:"Your Ass Hurts",rec:"6-8",pts:78.0} }
+];
+const MVPS = { 2021:"Cooper Kupp", 2022:"Jalen Hurts", 2023:"Christian McCaffrey", 2024:"Jahmyr Gibbs", 2025:"Josh Allen" };
+const DIV_CHAMPS = { 2021:["sebas","kurt"], 2022:["jp","jaxon"], 2023:["jp","kurt"], 2024:["sebas","paul"], 2025:["sop","ron"] };
+const LAST_PLACE = [
+  { year:2021, m:"jaxon", team:"DK's Large Tasty Stromboli", by:"Dom",                    punishment:"TikToks",      done:true },
+  { year:2022, m:"sop",   team:"Sop's RaftusBeerNelk",       by:"Team Ball (Sam)",        punishment:"Milk Mile",    done:true },
+  { year:2023, m:"rob",   team:"Bijan Mustard",              by:"Sop's RaftusBeerNelk",   punishment:"7/11",         done:true },
+  { year:2024, m:"kurt",  team:"Just Cage Me",               by:"Easy Pickens (Dom)",     punishment:"Waffle House", done:true },
+  { year:2025, m:"sam",   team:"Team PAPA",                  by:"King of the Hill (Dom)", punishment:"Loko Hands",   done:true }
+];
+/* This season's last-place punishment, and the league rule */
+const PUNISHMENT_NOW = "24 Hour Bar Challenge";
+const SHAME_RULE = "Finish last, do the punishment. Skip it and you're kicked out of the league.";
+const WHALE = [[1,"paul",97.02],[2,"rob",77.5],[3,"kurt",95.74],[4,"sam",97.82],[5,"ron",84.32],[6,"ron",94.26],[7,"jaxon",83.6],[8,"dom",71.5]];
+/* [player, odds, result] */
+const SIGNS = [
+  { wk:4, tnf:["Roman Wilson",460,"hit"],      snf:["Darren Waller",270,"miss"],   mnf:["Devaughn Vele",230,"hit"] },
+  { wk:5, tnf:["Ryan Flournoy",270,"miss"],    snf:["Rashod Bateman",475,"miss"],  mnf:["Dalton Kincaid",175,"miss"] },
+  { wk:6, tnf:["Seahawks -2.5",-110,"miss","spread"], snf:["Ryan Flournoy",330,"hit"], mnf:["George Kittle",105,"hit"] },
+  { wk:7, tnf:["Demario Douglas",320,"miss"],  snf:["Travis Kelce",220,"miss"],    mnf:["CeeDee Lamb",125,"hit"] },
+  { wk:8, tnf:["Tetairoa McMillan",175,"miss"],snf:["Saquon Barkley",142,"hit"],   mnf:["Luther Burden III",225,"hit"] },
+  { wk:9, tnf:["Jakobi Meyers",325,"miss"],    snf:["Luther Burden III",145,"hit"],mnf:null }
+];
+const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:null, snf:null } ];
+
+/* Power ranking blurbs, 2026 */
+const BLURBS = {
+  jp: "Named the team 3Time and is playing like he wants a fourth. Best record, most points, scariest playoff résumé in league history.",
+  jaxon: "#GILLMODE is real. Second-most points in the league and just hung 152.68 on the defending champ.",
+  sop: "Defending champ is 5-3 with the third-most points. Two straight losses, though, and Bass is up next.",
+  ron: "Fantoween is 4-4 but has scored 134+ in back-to-back weeks. Lost by 5.56 to JP. Trending up.",
+  kurt: "Bada Bing is right at .500, and two of the losses came by a combined 5.42 points. A couple bounces from 6-2.",
+  rob: "Do it for Roj. Hovering at 4-4 after a 126.56 bounce back. The 77.50 in Week 2 still haunts him.",
+  sam: "Fewest points allowed in the league. Schedule luck is a skill, right?",
+  sebas: "3-5 with the fourth-most points. Most weekly high scores in league history, but keeps running into buzzsaws. Just dropped 153.48.",
+  dom: "Likely to lose. Second-fewest points in the league and a 71.50 in Week 8 that bought the whale parlay.",
+  paul: "WHEN THEY GO? Not yet. 0-8, fewest points scored, most points allowed. Somebody check on him."
+};
+
+/* Playoffs: 6 teams. Week 15 quarterfinals (3v6, 4v5), seeds 1 and 2 on bye.
+   Week 16 semifinals (1 vs 4/5 winner, 2 vs 3/6 winner). Week 17 is the championship.
+   Games: [week, managerA, ptsA, managerB, ptsB] from ESPN's winners bracket. */
+const PLAYOFF_SEEDS = {
+  2021: ["kurt","sebas","paul","sop","jp","rob"],
+  2022: ["jaxon","jp","dom","sebas","ron","kurt"],
+  2023: ["jp","kurt","sebas","ron","paul","jaxon"],
+  2024: ["sebas","paul","jp","sop","sam","ron"],
+  2025: ["sop","ron","rob","sebas","jaxon","paul"]
+};
+const BRACKETS = {
+  2021: [[15,"sop",109.78,"jp",144.32],[15,"paul",89.2,"rob",84.34],[16,"kurt",98.18,"jp",110.88],[16,"sebas",168.06,"paul",94.22],[17,"sebas",115.9,"jp",128.22]],
+  2022: [[15,"sebas",115.58,"ron",132.4],[15,"dom",91.76,"kurt",86.42],[16,"jaxon",98.78,"ron",101.9],[16,"jp",154.76,"dom",90.94],[17,"jp",129.52,"ron",129.26]],
+  2023: [[15,"ron",92.44,"paul",122.82],[15,"sebas",161.26,"jaxon",163.3],[16,"jp",134.1,"paul",159.34],[16,"kurt",96.86,"jaxon",153],[17,"paul",89.58,"jaxon",80.6]],
+  2024: [[15,"sop",144.62,"sam",192.38],[15,"jp",142.9,"ron",106.86],[16,"sebas",175.28,"sam",136.46],[16,"paul",100.84,"jp",124.26],[17,"sebas",121.62,"jp",131.74]],
+  2025: [[15,"sebas",113.44,"jaxon",112.3],[15,"rob",104.76,"paul",141.2],[16,"sop",146.1,"sebas",99.52],[16,"ron",110.68,"paul",121.3],[17,"sop",139.38,"paul",78]]
+};
+const SEASON_WEEKS = { regular: 14, quarterfinal: 15, semifinal: 16, championship: 17 };
+/* Original team badge colors (not ESPN logos) */
+const BADGE = { sop:"#e4572e", kurt:"#2e86de", sam:"#10a37f", paul:"#8e5bd6", rob:"#f0a202", jaxon:"#d6336c", jp:"#c9a227", dom:"#3aa0a8", sebas:"#5b6bff", ron:"#6c9a3c" };
+
+/* Consolation bracket (seeds 7-10). Week 15: 7 vs 8 and 9 vs 10. Week 16: the two winners play for 7th,
+   the two losers play the last-place game. Loser of that game finishes last and owes the punishment.
+   [week, game, managerA, ptsA, managerB, ptsB] */
+const CONSOLATION = {
+  2021: [[15,"r1","dom",114.26,"sam",127.84],[15,"r1","ron",127.1,"jaxon",85.54],[16,"7th","sam",104.86,"ron",85.5],[16,"last","dom",144.38,"jaxon",96.14]],
+  2022: [[15,"r1","rob",123.88,"sam",102.72],[15,"r1","sop",107.48,"paul",123.3],[16,"7th","rob",88.6,"paul",148.7],[16,"last","sam",142.8,"sop",99.36]],
+  2023: [[15,"r1","dom",114.36,"sop",97.82],[15,"r1","rob",77.64,"sam",122.04],[16,"7th","dom",95.72,"sam",107.02],[16,"last","sop",135.72,"rob",134.8]],
+  2024: [[15,"r1","kurt",96.14,"rob",106.34],[15,"r1","jaxon",112.56,"dom",100.86],[16,"7th","rob",152.72,"jaxon",146.98],[16,"last","kurt",105.98,"dom",138.44]],
+  2025: [[15,"r1","jp",158.94,"sam",143.96],[15,"r1","kurt",151.6,"dom",96.8],[16,"7th","jp",113.58,"kurt",86.64],[16,"last","sam",101.9,"dom",127.6]]
+};
