@@ -34,7 +34,14 @@ A week counts as final only when every matchup in it has a winner set (not "UNDE
    - `BLURBS`: rewrite each manager's one or two sentence power-ranking blurb from the new numbers. Fun, light trash talk, accurate facts only.
    - Header comment date: "pulled <date>".
 3. **rosters.js** `ROSTER_RAW[2026]`: refresh current rosters (same pipe format as the existing lines).
-4. **index.html**: update any hard-coded week text (lead story, "Week N Matchups", Rosters subtitle, footer "through Week N of 2026"). Grep for the old week number.
+4. **transactions.js** `TX_RAW`: replace with the full 2026 activity feed (it's small, just rebuild it). Fetch
+   `.../leagues/848216391/communication/?view=kona_league_communication` with header `x-fantasy-filter`
+   `{"topics":{"filterType":{"value":["ACTIVITY_TRANSACTIONS"]},"limit":500,"limitPerMessageSet":{"value":25},"offset":0,"sortMessageDate":{"sortPriority":1,"sortAsc":false},"sortFor":{"sortPriority":2,"sortAsc":false},"filterIncludeMessageTypeIds":{"value":[178,180,179,239,181,244]}}}`.
+   messageTypeId 178 = free agent add, 180 = waiver add, 179/181 = drop that goes with the add, 239 = drop only (team = topic author's team), 244 = trade leg (`from` team to `to` team).
+   For adds/drops the team is `messages[0].to` (ESPN team id, map via mTeam owners). Look up player names with
+   `/apis/v3/games/ffl/seasons/2026/players?view=players_wl` and header `x-fantasy-filter: {"filterIds":{"value":[ids]}}`.
+   Keep the line format documented at the top of transactions.js, oldest first.
+5. **index.html**: update any hard-coded week text (lead story, "Week N Matchups", Rosters subtitle, footer "through Week N of 2026"). Grep for the old week number.
 
 SIGNS and TRENDS: any pick marked "open" from the finished week gets settled. "hit" if that player scored a touchdown in that game (anytime TD), "miss" if not. Check the box score on a sports site. Leave LAST_PLACE, punishments and side bets alone unless the user asked.
 

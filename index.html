@@ -248,6 +248,18 @@ th button.sort[data-active="true"] { color: var(--lamp); }
 .team-chip b { font-family: var(--display); font-weight: 800; font-size: 20px; text-transform: uppercase; line-height: 1; }
 .team-chip span { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
 .team-chip:hover { border-color: var(--lamp); }
+.tx-day { font-family: var(--label); font-weight: 700; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lamp); margin: 18px 0 8px; }
+.tx { display: grid; grid-template-columns: 130px 1fr; gap: 14px; align-items: start; background: var(--field); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+.tx .who b { display: block; font-family: var(--display); font-weight: 800; font-size: 20px; text-transform: uppercase; line-height: 1; }
+.tx .who small { color: var(--muted); font-size: 12px; }
+.tx .mv { display: flex; flex-direction: column; gap: 6px; }
+.tx .ln { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tx .tag { font-family: var(--label); font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 4px; padding: 2px 7px; }
+.tag.add { color: var(--hit); background: var(--hit-soft); } .tag.drop { color: var(--miss); background: var(--miss-soft); } .tag.trade { color: var(--on-lamp); background: var(--lamp); }
+.tx.trade { border-color: var(--lamp); box-shadow: inset 4px 0 0 var(--lamp); grid-template-columns: 1fr; }
+.trade-sides { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.trade-sides h4 { margin: 0 0 6px; font-family: var(--label); font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 640px) { .tx { grid-template-columns: 1fr; gap: 8px; } .trade-sides { grid-template-columns: 1fr; } }
 .team-chip[aria-pressed="true"] { border-color: var(--lamp); background: var(--lamp-soft); box-shadow: inset 0 -3px 0 var(--lamp); }
 .roster-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 24px; align-items: end; padding: 22px 24px; margin-bottom: 14px;
   background: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1.4px) 0 0 / 7px 7px, linear-gradient(135deg, #333f48, #111111); }
@@ -698,6 +710,15 @@ nav.tabs a .caret { font-size: 11px; margin-left: 4px; opacity: 0.6; }
   </section>
 
   <!-- BETS -->
+  <section class="view" id="view-moves">
+    <h1 class="page-title">Transactions</h1>
+    <p class="page-sub">Every add, drop, waiver claim and trade in the Woo this season, newest first.</p>
+    <div class="sb-sum" id="tx-sum"></div>
+    <div class="team-strip" id="tx-strip" style="margin-bottom:10px"></div>
+    <div class="yearbar" id="tx-kinds" style="margin-bottom:16px"></div>
+    <div id="tx-list"></div>
+  </section>
+
   <section class="view" id="view-bets">
     <h2 class="page-title">Side Bets 2026&ndash;27</h2>
     <p class="page-sub">Weekly side action. Units assume 1 unit flat on every pick.</p>
@@ -747,6 +768,7 @@ nav.tabs a .caret { font-size: 11px; margin-left: 4px; opacity: 0.6; }
 <script src="data.js"></script>
 <script src="rosters.js"></script>
 <script src="games.js"></script>
+<script src="transactions.js"></script>
 <script>
 /* ===================== helpers ===================== */
 const $ = (s, r = document) => r.querySelector(s);
@@ -1412,6 +1434,48 @@ function renderGameCenter(y) {
     <div class="gc-lineups">${table(bx.A, bx.a)}${table(bx.B, bx.b)}</div>`;
 }
 
+/* ===================== TRANSACTIONS ===================== */
+let txTeam = "all", txKind = "all";
+const txWeek = (d) => { const n = Math.floor((new Date(d + "T12:00:00") - new Date("2026-09-08T00:00:00")) / 604800000) + 1; return n < 1 ? "Preseason" : "Week " + n; };
+const txDate = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+const posTag = (p) => `<span class="pos pos-${p}" style="width:auto;padding:0 6px;height:22px;font-size:12px">${p === "DST" ? "D/ST" : p}</span>`;
+function txRow(t) {
+  if (t.kind === "T") {
+    const [a, b] = t.teams, side = (m) => t.legs.filter((x) => x.to === m).map((x) => `<div class="ln">${posTag(x.pos)}<span class="pname">${esc(x.name)}</span></div>`).join("");
+    return `<div class="tx trade"><div class="ln"><span class="tag trade">Trade</span><b style="font-family:var(--display);font-size:20px;text-transform:uppercase">${ml(a)} &harr; ${ml(b)}</b><span class="muted" style="font-size:13px">${t.legs.length} players</span></div>
+      <div class="trade-sides"><div><h4>${esc(N(a))} gets</h4>${side(a)}</div><div><h4>${esc(N(b))} gets</h4>${side(b)}</div></div></div>`;
+  }
+  const lines = [];
+  if (t.add) lines.push(`<div class="ln"><span class="tag add">${t.kind === "W" ? "Waiver claim" : "Added"}</span>${posTag(t.add.pos)}<span class="pname">${esc(t.add.name)}</span></div>`);
+  if (t.drop) lines.push(`<div class="ln"><span class="tag drop">Dropped</span>${posTag(t.drop.pos)}<span>${esc(t.drop.name)}</span></div>`);
+  return `<div class="tx"><div class="who"><b>${ml(t.m)}</b><small>${esc(team26(t.m)[1].trim())}</small></div><div class="mv">${lines.join("")}</div></div>`;
+}
+function drawMoves() {
+  const involves = (t, m) => (t.kind === "T" ? t.teams.includes(m) : t.m === m);
+  const counts = {}; ORDER.forEach((m) => (counts[m] = TX.filter((t) => involves(t, m)).length));
+  const most = ORDER.reduce((a, b) => (counts[b] > counts[a] ? b : a)), least = ORDER.reduce((a, b) => (counts[b] < counts[a] ? b : a));
+  const wire = {}; TX.forEach((t) => { if (t.add) wire[t.add.name] = (wire[t.add.name] || 0) + 1; });
+  const hot = Object.entries(wire).filter(([n]) => !/D\/ST/.test(n)).sort((a, b) => b[1] - a[1])[0];
+  $("#tx-sum").innerHTML = `
+    <div class="card"><div class="k">Total moves</div><div class="v">${TX.length}</div><div class="s">${TX.filter((t) => t.kind === "T").length} trades</div></div>
+    <div class="card"><div class="k">Most active</div><div class="v">${counts[most]}</div><div class="s">${ml(most)} lives on the wire</div></div>
+    <div class="card"><div class="k">Least active</div><div class="v">${counts[least]}</div><div class="s">${ml(least)} set it and forgot it</div></div>
+    <div class="card"><div class="k">Most passed around</div><div class="v">${hot[1]}x</div><div class="s">${esc(hot[0])}</div></div>`;
+  $("#tx-strip").innerHTML = `<button type="button" class="team-chip" data-m="all" aria-pressed="${txTeam === "all"}"><b>All</b><span>Whole league</span></button>` +
+    ORDER.map((m) => `<button type="button" class="team-chip" data-m="${m}" aria-pressed="${m === txTeam}"><b>${esc(N(m))}</b><span>${counts[m]} moves</span></button>`).join("");
+  $("#tx-kinds").innerHTML = [["all", "Everything"], ["T", "Trades"], ["add", "Adds & claims"], ["D", "Drops"]].map(([k, l]) => `<button type="button" class="btn" data-k="${k}" aria-pressed="${k === txKind}">${l}</button>`).join("");
+  const list = TX.filter((t) => (txTeam === "all" || involves(t, txTeam)) && (txKind === "all" || (txKind === "T" ? t.kind === "T" : txKind === "add" ? !!t.add : !!t.drop)));
+  let html = "", lastWk = "", lastDay = "";
+  list.forEach((t) => { const wk = txWeek(t.date); if (wk !== lastWk) { html += `<h3 class="section-title" style="font-size:24px;margin-top:22px">${wk}</h3>`; lastWk = wk; lastDay = ""; }
+    if (t.date !== lastDay) { html += `<div class="tx-day">${txDate(t.date)}</div>`; lastDay = t.date; } html += txRow(t); });
+  $("#tx-list").innerHTML = html || `<div class="card card-pad muted">Nothing here yet.</div>`;
+}
+function renderMoves() {
+  $("#tx-strip").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { txTeam = b.dataset.m; drawMoves(); } });
+  $("#tx-kinds").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { txKind = b.dataset.k; drawMoves(); } });
+  drawMoves();
+}
+
 /* ===================== logo + grouped nav ===================== */
 function swirlStar(id) {
   const pts = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 3.4 : 7.6, a = -Math.PI / 2 + i * Math.PI / 5; pts.push((15 + r * Math.cos(a)).toFixed(2) + "," + (11 + r * Math.sin(a)).toFixed(2)); }
@@ -1422,7 +1486,7 @@ function swirlStar(id) {
 }
 $("#logo").innerHTML = `W${swirlStar("lg1")}${swirlStar("lg2")}<span class="ffl">FFL</span>`;
 const GROUPS = [
-  { label: "2026 Season", pages: [["home", "Home"], ["scores", "Scoreboard"], ["schedule", "Schedules"], ["playoffs", "Playoff Picture"], ["rosters", "Rosters"], ["bets", "Side Bets"]] },
+  { label: "2026 Season", pages: [["home", "Home"], ["scores", "Scoreboard"], ["schedule", "Schedules"], ["playoffs", "Playoff Picture"], ["rosters", "Rosters"], ["moves", "Transactions"], ["bets", "Side Bets"]] },
   { label: "Managers", pages: [["managers", "All Managers"], ["rivalry", "Rivalry Check"]] },
   { label: "History", pages: [["history", "Super Bowls & Seasons"], ["records", "Record Book"], ["shame", "Wall of Shame"]] }
 ];
@@ -1433,7 +1497,7 @@ function drawNav(page) {
 }
 
 /* ===================== router ===================== */
-const VIEWS = ["home","scores","schedule","playoffs","rosters","managers","rivalry","history","records","shame","bets"];
+const VIEWS = ["home","scores","schedule","playoffs","rosters","moves","managers","rivalry","history","records","shame","bets"];
 function route() {
   const h = (location.hash || "#home").slice(1);
   let view = VIEWS.includes(h) ? h : "home", tab = view;
@@ -1447,7 +1511,7 @@ function route() {
   drawNav(tab);
   window.scrollTo(0, 0);
 }
-renderHome(); renderScores(); renderSchedule(); renderPlayoffs(); renderRosters(); renderManagers(); renderRivalry(); renderHistory(); renderRecords(); renderShame(); renderBets();
+renderHome(); renderScores(); renderSchedule(); renderMoves(); renderPlayoffs(); renderRosters(); renderManagers(); renderRivalry(); renderHistory(); renderRecords(); renderShame(); renderBets();
 window.addEventListener("hashchange", route);
 route();
 </script>
