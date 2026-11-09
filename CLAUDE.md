@@ -36,7 +36,7 @@ A week counts as final only when every matchup in it has a winner set (not "UNDE
 3. **rosters.js** `ROSTER_RAW[2026]`: refresh current rosters (same pipe format as the existing lines).
 4. **index.html**: update any hard-coded week text (lead story, "Week N Matchups", Rosters subtitle, footer "through Week N of 2026"). Grep for the old week number.
 
-Leave SIGNS, TRENDS, LAST_PLACE, punishments and side bets alone unless the user asked.
+SIGNS and TRENDS: any pick marked "open" from the finished week gets settled. "hit" if that player scored a touchdown in that game (anytime TD), "miss" if not. Check the box score on a sports site. Leave LAST_PLACE, punishments and side bets alone unless the user asked.
 
 ## Before pushing
 - `node -e` check: every team's W-L, PF, PA computed from GAMES[2026] matches STANDINGS[2026].
