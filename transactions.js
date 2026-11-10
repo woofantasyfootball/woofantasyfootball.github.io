@@ -1,4 +1,4 @@
-/* 2026 league transactions from ESPN's activity feed (adds, drops, waiver claims, trades), pulled Nov 9 2026.
+/* 2026 league transactions from ESPN's activity feed (adds, drops, waiver claims, trades), pulled Nov 10 2026.
    Format per line: date|kind|manager|addName|addPos|dropName|dropPos   kind: F free agent, W waiver claim, D drop only
    Trades: date|T|from>to>Player|POS~from>to>Player|POS... */
 const TX_RAW = `2026-08-10|F|sop|Jaguars D/ST|DST|Browns D/ST|DST
