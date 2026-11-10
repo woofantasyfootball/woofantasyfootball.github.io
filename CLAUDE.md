@@ -41,7 +41,17 @@ A week counts as final only when every matchup in it has a winner set (not "UNDE
    For adds/drops the team is `messages[0].to` (ESPN team id, map via mTeam owners). Look up player names with
    `/apis/v3/games/ffl/seasons/2026/players?view=players_wl` and header `x-fantasy-filter: {"filterIds":{"value":[ids]}}`.
    Keep the line format documented at the top of transactions.js, oldest first.
-5. **index.html**: update any hard-coded week text (lead story, "Week N Matchups", Rosters subtitle, footer "through Week N of 2026"). Grep for the old week number.
+5. **data.js `HEADLINES` and `RECAPS`** (the fun part, do it every week):
+   - Pull player scores for the finished week: `...?view=mMatchupScore&view=mBoxscore&view=mTeam&scoringPeriodId=N` with header
+     `x-fantasy-filter: {"schedule":{"filterMatchupPeriodIds":{"value":[N]}}}`. Each side has `rosterForCurrentScoringPeriod.entries`
+     with `lineupSlotId` (0 QB, 2 RB, 4 WR, 6 TE, 23 FLEX, 16 D/ST, 17 K, 20 bench, 21 IR) and `playerPoolEntry.appliedStatTotal`.
+   - `RECAPS[2026][N]`: one entry per game `{ a, b, t, x }`. `t` is a punchy headline, `x` is 3 to 5 sentences: who carried the
+     winner, any bench mistake that would have flipped the result (check bench vs starter at an eligible slot against the margin),
+     zeros or duds, and what it means for each team's record/standings/streak. If the game was boring, talk about the state of each team instead.
+   - `HEADLINES`: set `week` to the new CURRENT_WEEK, write a new lead story (`title` + gold `em` ending + `text`) about the
+     biggest storyline, and 4 `side` items ("Around the league"). Use `{managerKey}` tokens for links.
+   - Voice for both: like the existing ones. Casual, a little trash talk, never mean, every number must be right. No em dashes.
+6. **index.html**: update any hard-coded week text (lead story, "Week N Matchups", Rosters subtitle, footer "through Week N of 2026"). Grep for the old week number.
 
 SIGNS and TRENDS: any pick marked "open" from the finished week gets settled. "hit" if that player scored a touchdown in that game (anytime TD), "miss" if not. Check the box score on a sports site. Leave LAST_PLACE, punishments and side bets alone unless the user asked.
 

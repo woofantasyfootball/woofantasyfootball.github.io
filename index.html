@@ -126,6 +126,15 @@ th button.sort[data-active="true"] { color: var(--lamp); }
 .lead-main p { margin: 0; color: #d2d3cf; max-width: 52ch; }
 .lead-side { border-left: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 12px; align-content: start; }
 .lead-side .kicker { margin-bottom: 2px; }
+.recap-list { display: grid; gap: 18px; }
+.recap { border-left: 3px solid var(--lamp); padding-left: 14px; }
+.recap .rc-score { font-family: var(--label); font-weight: 600; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+.recap .rc-score b { color: var(--lamp); }
+.recap h4 { margin: 4px 0 6px; font-family: var(--display); font-weight: 800; font-size: 22px; text-transform: uppercase; line-height: 1.05; }
+.recap p { margin: 0; color: var(--soft); line-height: 1.55; }
+.sg-recap { padding: 10px 14px 12px; border-top: 1px solid var(--line); }
+.sg-recap b { display: block; font-family: var(--display); font-weight: 800; font-size: 17px; text-transform: uppercase; line-height: 1.1; margin-bottom: 4px; }
+.sg-recap p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--soft); }
 .story { display: grid; grid-template-columns: 4px 1fr; gap: 12px; }
 .story::before { content: ""; background: var(--line); border-radius: 2px; }
 .story b { display: block; font-weight: 700; line-height: 1.25; }
@@ -539,6 +548,7 @@ nav.tabs a .caret { font-size: 11px; margin-left: 4px; opacity: 0.6; }
           <div class="card-head"><h3>Road to Super Bowl VI</h3><a class="more" href="#playoffs">Playoff picture</a></div>
           <div class="card-pad"><div class="timeline" id="home-timeline"></div><div class="tl-key" id="home-key"></div></div>
         </div>
+        <div class="card" id="home-recaps"></div>
         <div class="card">
           <div class="card-head"><h3 id="mu-title">Week 9 Matchups</h3><span class="muted" style="font-size:14px">Win odds from 2026 scoring</span></div>
           <div class="matchups" id="matchups"></div>
@@ -1006,19 +1016,22 @@ function signsTally() {
   return { w, l, units };
 }
 function renderHome() {
-  const jp = team26("jp");
+  const tok = (str) => esc(str).replace(/\{(\w+)\}/g, (_, m) => (MANAGERS[m] ? ml(m) : m));
+  const H = HEADLINES;
   $("#lead-main").innerHTML = `
-    <span class="kicker">Week ${CURRENT_WEEK} &middot; Lead story</span>
-    <h1>3Time is ${jp[2]}-${jp[3]}. JP wants <em>ring No. 4.</em></h1>
-    <p>${ml("jp")} leads the league in points (${f2(jp[4])}) and owns the best championship bracket record in league history at ${PLAYOFFS.jp[0]}-${PLAYOFFS.jp[1]}. The team name is not subtle.</p>`;
-  const paul = team26("paul"), dom = W26.dom[7], seb = W26.sebas[7];
-  $("#lead-side").innerHTML = `
-    <span class="kicker">Around the league</span>
-    <div class="story"><div><b>${ml("paul")} is ${paul[2]}-${paul[3]}</b><span>WHEN THEY GO? has the fewest points scored and the most allowed.</span></div></div>
-    <div class="story"><div><b>Sebas drops ${f2(seb[1])} on Dom</b><span>The 81.98 margin is the 5th biggest blowout in league history. Dom's ${f2(dom[1])} buys the whale parlay.</span></div></div>
-    <div class="story"><div><b>Defending champ ${ml("sop")} sits ${team26("sop")[2]}-${team26("sop")[3]}</b><span>Back-to-back losses, with Sebas up next in Week ${CURRENT_WEEK}.</span></div></div>
-    <div class="story"><div><b>Last place does a ${esc(PUNISHMENT_NOW)}</b><span>Skip it and you're out of the league. ${ml("paul")} is on pace at ${paul[2]}-${paul[3]}.</span></div></div>`;
-
+    <span class="kicker">Week ${H.week} &middot; Lead story</span>
+    <h1>${tok(H.lead.title)} <em>${tok(H.lead.em)}</em></h1>
+    <p>${tok(H.lead.text)}</p>`;
+  $("#lead-side").innerHTML = `<span class="kicker">Around the league</span>` +
+    H.side.map((x) => `<div class="story"><div><b>${tok(x.t)}</b><span>${tok(x.s)}</span></div></div>`).join("");
+  const rw = Math.max(...Object.keys(RECAPS[CUR] || {}).map(Number));
+  if (isFinite(rw)) {
+    $("#home-recaps").innerHTML = `<div class="card-head"><h3>Week ${rw} Recaps</h3><a class="more" href="#scores" id="recap-more">Full scoreboard</a></div><div class="card-pad recap-list">` +
+      RECAPS[CUR][rw].map((r) => { const g = GAMES[CUR].find((g) => g.wk === rw && [g.a, g.b].includes(r.a) && [g.a, g.b].includes(r.b));
+        const w = g.pa > g.pb ? g.a : g.b, l = w === g.a ? g.b : g.a, wp = Math.max(g.pa, g.pb), lp = Math.min(g.pa, g.pb);
+        return `<div class="recap"><div class="rc-score">${ml(w)} <b>${f2(wp)}</b>, ${ml(l)} ${f2(lp)}</div><h4>${tok(r.t)}</h4><p>${tok(r.x)}</p></div>`; }).join("") + `</div>`;
+    $("#recap-more").addEventListener("click", () => { scYear = CUR; scWeek = rw; drawScores(); });
+  } else $("#home-recaps").style.display = "none";
   drawTimeline("#home-timeline", "#home-key");
   $("#mu-title").textContent = `Week ${CURRENT_WEEK} Matchups`;
   $("#matchups").innerHTML = SCHEDULE_26.filter((g) => g[0] === CURRENT_WEEK).map(([, a, b]) => {
@@ -1342,7 +1355,9 @@ function scoreCard(y, g) {
   const h = h2h(g.a, g.b);
   const foot = done ? `<span>Won by ${f2(Math.abs(g.pa - g.pb))}</span>${g.t === "P" && g.wk === 17 ? `<a href="#sb-${y}">Box score &rarr;</a>` : ""}`
     : `<span>${g.wk === CURRENT_WEEK ? "In progress" : "Upcoming"}</span><span>All-time: ${esc(N(g.a))} ${h.rw + h.pw}-${h.rl + h.pl}</span>`;
-  return `<div class="sg"${g.t === "W" ? ' style="opacity:0.8"' : ""}><div class="bm-tag"><span>${kindOf(y, g)}</span><span>Wk ${g.wk}</span></div>${row(g.a, ta, g.pa, g.pb)}${row(g.b, tb, g.pb, g.pa)}<div class="sg-foot">${foot}</div></div>`;
+  const rc = ((RECAPS[y] || {})[g.wk] || []).find((r) => [g.a, g.b].includes(r.a) && [g.a, g.b].includes(r.b));
+  const rcHtml = rc ? `<div class="sg-recap"><b>${esc(rc.t)}</b><p>${esc(rc.x)}</p></div>` : "";
+  return `<div class="sg"${g.t === "W" ? ' style="opacity:0.8"' : ""}><div class="bm-tag"><span>${kindOf(y, g)}</span><span>Wk ${g.wk}</span></div>${row(g.a, ta, g.pa, g.pb)}${row(g.b, tb, g.pb, g.pa)}${rcHtml}<div class="sg-foot">${foot}</div></div>`;
 }
 function drawScores() {
   const maxWk = scYear === CUR ? 14 : 17;

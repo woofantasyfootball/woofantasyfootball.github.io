@@ -103,6 +103,35 @@ const SIGNS = [
 ];
 const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:null, snf:null } ];
 
+/* ===== Headlines + weekly recaps. Rewritten every week by the Tuesday update. =====
+   {sop} style tokens become manager links. Casual voice, no em dashes, facts only. */
+const HEADLINES = {
+  week: 9,
+  lead: { title: "3Time is 7-1. JP wants", em: "ring No. 4.",
+          text: "{jp} leads the league in points (1088.94) and owns the best championship bracket record in league history at 8-1. The team name is not subtle." },
+  side: [
+    { t: "{paul} is 0-8", s: "WHEN THEY GO? has the fewest points scored and the most allowed." },
+    { t: "Sebas drops 153.48 on Dom", s: "The 81.98 margin is the 5th biggest blowout in league history. Dom's 71.50 buys the whale parlay." },
+    { t: "Defending champ {sop} sits 5-3", s: "Back-to-back losses, with Sebas up next in Week 9." },
+    { t: "Last place does a 24 Hour Bar Challenge", s: "Skip it and you're out of the league. {paul} is on pace at 0-8." }
+  ]
+};
+/* RECAPS[year][week] = [{ a, b, t: headline, x: write-up }]. a/b match the game's managers in any order. */
+const RECAPS = { 2026: {
+  8: [
+    { a: "sebas", b: "dom", t: "Bomb Squad flattens Dom by 81.98",
+      x: "Ja'Marr Chase (31.1) and Bhayshul Tuten (29.9) did most of the damage, and Sebas still won by 81.98 with Aaron Rodgers putting up 4.9 at QB. Dom's whole lineup managed 71.50. Zay Flowers, the guy Dom traded for, gave him a zero at FLEX while Michael Wilson dropped 26.8 on the bench. 5th biggest blowout in league history, and the whale parlay is on Dom." },
+    { a: "kurt", b: "sam", t: "Bada Bing survives by 2.58",
+      x: "Bucky Irving led Kurt with 21.0, and he won this one with Patrick Mahomes (25.4) sitting on his bench. Sam is going to hate this one. Courtland Sutton scored 9.3 on his bench while KC Concepcion started and put up 6.7. That swap alone flips the result. Kurt gets back to .500 at 4-4." },
+    { a: "jaxon", b: "sop", t: "#GILLMODE hangs 152.68 on the defending champ",
+      x: "Joe Burrow went for 39.5 and Puka Nacua added 25.0. That's too much for anybody. Sop's trade haul showed up with Tony Pollard (28.7) and Harold Fannin Jr. (23.4), but a 1.0 from the kicker didn't help. Second straight loss for Sop, who falls to 5-3. Jaxon moves to 5-3 with the second-most points in the league." },
+    { a: "jp", b: "ron", t: "Tee Higgins carries 3Time to 7-1",
+      x: "Tee Higgins put up 37.5 from the FLEX spot and JP squeaked by 5.56. Ron will be thinking about this one all week. Jonah Coleman scored 20.4 on his bench while Quinshon Judkins started and got 6.9. Start Coleman and Ron wins. Instead JP keeps rolling at 7-1." },
+    { a: "rob", b: "paul", t: "Do it for Roj, and Paul stays winless",
+      x: "D'Andre Swift (27.9), Jahmyr Gibbs (24.8) and Braelon Allen (23.3) gave Rob a 126.56 bounce back. Paul started Lamar Jackson and got a zero, and Tyler Allgeier scored 36.1 on his bench. Brock Bowers (28.2) and the Jaguars D/ST (21.0) tried. Paul is 0-8 and the 24 Hour Bar Challenge is getting closer." }
+  ]
+} };
+
 /* Power ranking blurbs, 2026 */
 const BLURBS = {
   jp: "Named the team 3Time and is playing like he wants a fourth. Best record, most points, scariest playoff résumé in league history.",
