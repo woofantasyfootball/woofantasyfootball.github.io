@@ -883,7 +883,7 @@ function drawTimeline(sel, keySel) {
     h += `<div class="${cls.join(" ")}" title="${title}">${label}</div>`;
   }
   $(sel).innerHTML = h;
-  $(keySel).innerHTML = `<span>Weeks 1&ndash;14: <b>Regular season</b></span><span>Week 15: <b>Quarterfinals</b></span><span>Week 16: <b>Semifinals</b></span><span>Week 17: <b>Championship</b></span><span>Now: <b>Week ${CURRENT_WEEK}</b>, ${14 - CURRENT_WEEK + 1} regular season weeks left</span><span>Trade deadline: <b>Dec 2</b> (${deadlineTxt().short === "Passed" ? "passed" : deadlineTxt().short === "Today" ? "today" : deadlineTxt().short + " left"})</span>`;
+  $(keySel).innerHTML = `<span>Weeks 1&ndash;14: <b>Regular season</b></span><span>Week 15: <b>Quarterfinals</b></span><span>Week 16: <b>Semifinals</b></span><span>Week 17: <b>Championship</b></span><span>Now: <b>Week ${CURRENT_WEEK}</b>, ${14 - CURRENT_WEEK + 1} regular season weeks left</span><span>Trade deadline: <b>${TRADE_DEADLINE_LABEL}</b> (${deadlineTxt().short === "Passed" ? "passed" : deadlineTxt().short + " left"})</span>`;
 }
 
 /* ===================== playoffs ===================== */
@@ -986,11 +986,12 @@ function renderPlayoffs() {
 /* ===================== ticker ===================== */
 /* trade deadline countdown, computed live from today's date */
 function deadlineTxt() {
-  const end = new Date(TRADE_DEADLINE + "T23:59:59"), now = new Date();
-  const days = Math.ceil((end - now) / 86400000);
-  if (days < 0) return { short: "Passed", long: "The trade deadline (Dec 2) has passed. Rosters are what they are." };
-  if (days === 0) return { short: "Today", long: "Trade deadline is <b>TODAY</b>. Get your offers in." };
-  return { short: `${days} day${days === 1 ? "" : "s"}`, long: `Trade deadline is <b>Wed, Dec 2</b>. ${days} day${days === 1 ? "" : "s"} to make a deal.` };
+  const end = new Date(TRADE_DEADLINE), now = new Date(), ms = end - now;
+  if (ms <= 0) return { short: "Passed", long: `The trade deadline (${TRADE_DEADLINE_LABEL}) has passed. Rosters are what they are.` };
+  const hrs = Math.floor(ms / 3600000), days = Math.floor(hrs / 24);
+  const left = days >= 1 ? `${days} day${days === 1 ? "" : "s"}${hrs % 24 ? `, ${hrs % 24} hr${hrs % 24 === 1 ? "" : "s"}` : ""}` : `${Math.max(hrs, 0)} hr${hrs === 1 ? "" : "s"}`;
+  if (days < 1) return { short: left, long: `Trade deadline is <b>TODAY at noon</b>. ${left} left, get your offers in.` };
+  return { short: left, long: `Trade deadline is <b>${TRADE_DEADLINE_LABEL}</b>. ${left} to make a deal.` };
 }
 (function crawl() {
   const items = [];

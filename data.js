@@ -69,7 +69,8 @@ const W26 = {
 /* Remaining 2026 schedule: [week, home, away] */
 const SCHEDULE_26 = [[10,"sop","kurt"],[10,"jp","sam"],[10,"dom","jaxon"],[10,"rob","sebas"],[10,"paul","ron"],[11,"jp","jaxon"],[11,"sop","rob"],[11,"ron","kurt"],[11,"sam","sebas"],[11,"paul","dom"],[12,"rob","ron"],[12,"sebas","jp"],[12,"jaxon","paul"],[12,"sam","sop"],[12,"kurt","dom"],[13,"sebas","paul"],[13,"rob","sam"],[13,"dom","ron"],[13,"jp","sop"],[13,"kurt","jaxon"],[14,"dom","sop"],[14,"kurt","jp"],[14,"jaxon","rob"],[14,"ron","sebas"],[14,"paul","sam"]];
 const CURRENT_WEEK = 10;
-const TRADE_DEADLINE = "2026-12-02"; /* Wed Dec 2, before Week 13 */
+const TRADE_DEADLINE = "2026-11-18T12:00:00-05:00"; /* Wed Nov 18 at 12:00 PM ET, before Week 11 */
+const TRADE_DEADLINE_LABEL = "Wed, Nov 18 at noon";
 
 /* From the league history doc */
 const BOWLS = [
