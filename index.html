@@ -141,6 +141,23 @@ th button.sort[data-active="true"] { color: var(--lamp); }
 .story span { font-size: 14px; color: var(--muted); }
 
 .matchups { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; padding: 14px; }
+.mu-link { cursor: pointer; transition: border-color .15s, transform .15s; }
+.mu-link:hover, .mu-link:focus-visible { border-color: var(--lamp); transform: translateY(-1px); }
+.mu-go { color: var(--lamp); font-weight: 700; }
+.vs-tbl { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.vs-tbl .pl { overflow-wrap: anywhere; }
+.vs-tbl td { padding: 10px 8px; border-top: 1px solid var(--line); vertical-align: middle; }
+.vs-tbl .sl { text-align: center; font-family: var(--label); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; color: var(--muted); background: var(--field-2); width: 64px; }
+.vs-tbl .av { font-family: var(--display); font-weight: 800; font-size: 20px; width: 64px; }
+.vs-tbl .L { text-align: left; } .vs-tbl .Rt { text-align: right; }
+.vs-tbl .av.L { text-align: right; } .vs-tbl .av.Rt { text-align: left; }
+.vs-tbl .edge { color: var(--lamp); }
+.vs-tbl .pl b { display: block; font-weight: 700; font-size: 16px; line-height: 1.2; }
+.vs-tbl .pl small { color: var(--muted); font-size: 12px; }
+.vs-tbl tr.tot td { background: var(--field-2); font-family: var(--display); font-weight: 900; font-size: 22px; text-transform: uppercase; }
+.vs-tbl tr.bn td { opacity: 0.72; }
+.vs-tbl .inj { color: var(--miss); font-weight: 700; font-size: 11px; margin-left: 4px; }
+@media (max-width: 640px) { .vs-tbl td { padding: 8px 4px; } .vs-tbl tr.tot td { font-size: 15px; } .vs-tbl .pl small { display: none; } .vs-tbl .av { font-size: 16px; width: 44px; } .vs-tbl .sl { width: 46px; font-size: 11px; } .vs-tbl .pl b { font-size: 14px; } }
 .mu { background: var(--field-2); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 8px; }
 .mu-side { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 8px; }
 .mu-side .nm { font-weight: 700; line-height: 1.2; }
@@ -550,7 +567,7 @@ nav.tabs a .caret { font-size: 11px; margin-left: 4px; opacity: 0.6; }
         </div>
         <div class="card" id="home-recaps"></div>
         <div class="card">
-          <div class="card-head"><h3 id="mu-title">Week 10 Matchups</h3><span class="muted" style="font-size:14px">Win odds from 2026 scoring</span></div>
+          <div class="card-head"><h3 id="mu-title">Week 10 Matchups</h3><span class="muted" style="font-size:14px">Tap a game for lineups</span></div>
           <div class="matchups" id="matchups"></div>
         </div>
         <div class="card">
@@ -599,6 +616,7 @@ nav.tabs a .caret { font-size: 11px; margin-left: 4px; opacity: 0.6; }
 
   <!-- GAME CENTER -->
   <section class="view" id="view-gc"></section>
+  <section class="view" id="view-vs"></section>
 
   <!-- PLAYOFFS -->
   <section class="view" id="view-playoffs">
@@ -1036,16 +1054,21 @@ function renderHome() {
   drawTimeline("#home-timeline", "#home-key");
   $("#mu-title").textContent = `Week ${CURRENT_WEEK} Matchups`;
   $("#matchups").innerHTML = SCHEDULE_26.filter((g) => g[0] === CURRENT_WEEK).map(([, a, b]) => {
-    const p = winProb(a, b), ra = team26(a), rb = team26(b), h = h2h(a, b);
+    const p = lineupProb(a, b), ra = team26(a), rb = team26(b), h = h2h(a, b);
     const fav = p >= 0.5 ? a : b, favP = Math.max(p, 1 - p);
-    return `<div class="mu">
+    return `<div class="mu mu-link" role="link" tabindex="0" data-href="#vs-${a}-${b}" aria-label="Open the ${esc(N(a))} vs ${esc(N(b))} matchup">
       <div class="mu-side"><div><span class="nm">${esc(ra[1].trim())}</span><span class="sub">${ml(a)} &middot; avg ${f1(S26[a].avg)}</span></div><span class="rec">${ra[2]}-${ra[3]}</span></div>
       <div class="mu-side"><div><span class="nm">${esc(rb[1].trim())}</span><span class="sub">${ml(b)} &middot; avg ${f1(S26[b].avg)}</span></div><span class="rec">${rb[2]}-${rb[3]}</span></div>
       <div class="mu-prob" role="img" aria-label="${esc(N(a))} ${Math.round(p * 100)} percent"><i style="width:${(p * 100).toFixed(0)}%"></i><i style="width:${(100 - p * 100).toFixed(0)}%"></i></div>
-      <div class="mu-foot"><span><b>${esc(N(fav))}</b> ${Math.round(favP * 100)}% to win</span><span>All-time: ${esc(N(a))} ${h.rw + h.pw}-${h.rl + h.pl}</span></div>
+      <div class="mu-foot"><span><b>${esc(N(fav))}</b> ${Math.round(favP * 100)}% to win</span><span class="mu-go">Lineups &rarr;</span></div>
     </div>`;
   }).join("");
 
+  document.querySelectorAll("#matchups .mu-link").forEach((el) => {
+    const go = (e) => { if (e.target.closest("a")) return; location.hash = el.dataset.href; };
+    el.addEventListener("click", go);
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(e); } });
+  });
   $("#power").innerHTML = POWER.map((m, i) => {
     const r = team26(m), s = S26[m];
     return `<div class="pr-row">
@@ -1355,7 +1378,7 @@ function scoreCard(y, g) {
   const row = (m, t, p, o) => `<div class="sg-row ${st(p, o)}"><span class="tn">${esc(t[1].trim())}<small>${esc(N(m))}${recTxt(t) ? " &middot; " + recTxt(t) : ""}</small></span><span class="sc">${done ? f2(p) : ""}</span></div>`;
   const h = h2h(g.a, g.b);
   const foot = done ? `<span>Won by ${f2(Math.abs(g.pa - g.pb))}</span>${g.t === "P" && g.wk === 17 ? `<a href="#sb-${y}">Box score &rarr;</a>` : ""}`
-    : `<span>${g.wk === CURRENT_WEEK ? "In progress" : "Upcoming"}</span><span>All-time: ${esc(N(g.a))} ${h.rw + h.pw}-${h.rl + h.pl}</span>`;
+    : `<span>${g.wk === CURRENT_WEEK ? "This week" : "Upcoming"}</span>${y === CUR && g.wk === CURRENT_WEEK ? `<a href="#vs-${g.a}-${g.b}">Lineups &rarr;</a>` : `<span>All-time: ${esc(N(g.a))} ${h.rw + h.pw}-${h.rl + h.pl}</span>`}`;
   const rc = ((RECAPS[y] || {})[g.wk] || []).find((r) => [g.a, g.b].includes(r.a) && [g.a, g.b].includes(r.b));
   const rcHtml = rc ? `<div class="sg-recap"><b>${esc(rc.t)}</b><p>${esc(rc.x)}</p></div>` : "";
   return `<div class="sg"${g.t === "W" ? ' style="opacity:0.8"' : ""}><div class="bm-tag"><span>${kindOf(y, g)}</span><span>Wk ${g.wk}</span></div>${row(g.a, ta, g.pa, g.pb)}${row(g.b, tb, g.pb, g.pa)}${rcHtml}<div class="sg-foot">${foot}</div></div>`;
@@ -1492,6 +1515,38 @@ function renderMoves() {
   drawMoves();
 }
 
+/* ===================== MATCHUP PREVIEW (lineups head to head) ===================== */
+const VS_SLOTS = ["QB", "RB", "RB", "WR", "WR", "TE", "FLEX", "DST", "K"];
+const lineupAvg = (m) => lineupOf(m).starters.reduce((t, x) => t + (x ? x.avg : 0), 0);
+function lineupProb(a, b) { const z = (lineupAvg(a) - lineupAvg(b)) / Math.sqrt(S26[a].sd ** 2 + S26[b].sd ** 2); return 0.5 * (1 + erf(z / Math.SQRT2)); }
+function lineupOf(m) {
+  const ros = (ROSTERS[CUR][m] || []).slice(), used = new Set(), starters = [];
+  VS_SLOTS.forEach((sl) => { const i = ros.findIndex((p, k) => !used.has(k) && p.slot === sl); if (i >= 0) { used.add(i); starters.push(ros[i]); } else starters.push(null); });
+  const bench = ros.filter((p, k) => !used.has(k)).sort((x, y) => y.avg - x.avg);
+  return { starters, bench };
+}
+function renderVs(a, b) {
+  const ta = team26(a), tb = team26(b), A = lineupOf(a), B = lineupOf(b), p = lineupProb(a, b), h = h2h(a, b);
+  const sum = (L) => L.starters.reduce((t, x) => t + (x ? x.avg : 0), 0), sa = sum(A), sb = sum(B);
+  const cell = (x, side) => x ? `<td class="pl ${side}"><b>${esc(x.name)}${x.inj ? `<span class="inj" title="${esc(x.inj)}">${({QUESTIONABLE:"Q",DOUBTFUL:"D",OUT:"OUT",INJURY_RESERVE:"IR",SUSPENSION:"SUSP"})[x.inj] || esc(x.inj)}</span>` : ""}</b><small>${x.pos === "DST" ? "D/ST" : x.pos} &middot; ${esc(x.nfl)} &middot; ${f1(x.pts)} pts on the year</small></td>` : `<td class="pl ${side} muted">Empty</td>`;
+  const avg = (x, o, side) => `<td class="av ${side}${x && (!o || x.avg > o.avg) ? " edge" : ""}">${x ? f1(x.avg) : "&ndash;"}</td>`;
+  const rows = VS_SLOTS.map((sl, i) => { const x = A.starters[i], y = B.starters[i];
+    return `<tr>${cell(x, "L")}${avg(x, y, "L")}<td class="sl">${sl === "DST" ? "D/ST" : sl}</td>${avg(y, x, "Rt")}${cell(y, "Rt")}</tr>`; }).join("");
+  const n = Math.max(A.bench.length, B.bench.length);
+  const bench = Array.from({ length: n }, (_, i) => { const x = A.bench[i], y = B.bench[i];
+    return `<tr class="bn">${x ? cell(x, "L") : "<td></td>"}<td class="av L">${x ? f1(x.avg) : ""}</td><td class="sl">${x && x.slot === "IR" || y && y.slot === "IR" ? "IR/BN" : "BN"}</td><td class="av Rt">${y ? f1(y.avg) : ""}</td>${y ? cell(y, "Rt") : "<td></td>"}</tr>`; }).join("");
+  const side = (m, t, pr, proj) => `<div class="${pr >= 0.5 ? "win" : "lose"}"><div class="tm">${esc(t[1].trim())}</div><div class="mg">${ml(m)} &middot; ${t[2]}-${t[3]} &middot; ${ord(t[6])} seed</div><div class="pts">${Math.round(pr * 100)}%</div><div class="mg">to win &middot; lineup avg ${f1(proj)}</div></div>`;
+  const others = SCHEDULE_26.filter((g) => g[0] === CURRENT_WEEK && !(g[1] === a && g[2] === b));
+  $("#view-vs").innerHTML = `
+    <a class="back" href="#home">&larr; Back to Home</a>
+    <div class="sb-links">${others.map((g) => `<a class="btn" style="text-decoration:none" href="#vs-${g[1]}-${g[2]}">${esc(N(g[1]))} vs ${esc(N(g[2]))}</a>`).join("")}</div>
+    <div class="card gc-head">${side(a, ta, p, sa)}<div class="mid">Week ${CURRENT_WEEK}<br><b style="color:var(--chalk)">Matchup</b><br>All-time<br>${esc(N(a))} ${h.rw + h.pw}-${h.rl + h.pl}</div>${side(b, tb, 1 - p, sb)}</div>
+    <div class="card"><div class="tbl-wrap"><table class="vs-tbl"><tbody>${rows}
+      <tr class="tot"><td class="L">Starters avg</td><td class="av L${sa >= sb ? " edge" : ""}">${f1(sa)}</td><td class="sl">TOT</td><td class="av Rt${sb > sa ? " edge" : ""}">${f1(sb)}</td><td class="Rt">Starters avg</td></tr>
+      ${bench}</tbody></table></div></div>
+    <p class="muted" style="font-size:14px;margin-top:12px">Lineups as of the last site update (${esc(HEADLINES ? "Week " + (CURRENT_WEEK - 1) + " results" : "")}). Managers can still change them on ESPN before kickoff. Numbers are season averages per game, and gold marks the edge at each spot. Win odds compare the two starting lineups' averages, with each team's week-to-week swings baked in.</p>`;
+}
+
 /* ===================== logo + grouped nav ===================== */
 function swirlStar(id) {
   const pts = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 3.4 : 7.6, a = -Math.PI / 2 + i * Math.PI / 5; pts.push((15 + r * Math.cos(a)).toFixed(2) + "," + (11 + r * Math.sin(a)).toFixed(2)); }
@@ -1521,6 +1576,8 @@ function route() {
   const rm = h.match(/^r-([a-z]+)-(\d{4})$/);
   if (rm && MANAGERS[rm[1]] && ROSTERS[+rm[2]]) { view = "rosters"; tab = "rosters"; rTeam = rm[1]; rYear = +rm[2]; }
   if (view === "rosters") drawRoster();
+  const vs = h.match(/^vs-(\w+)-(\w+)$/);
+  if (vs && MANAGERS[vs[1]] && MANAGERS[vs[2]]) { view = "vs"; tab = "home"; renderVs(vs[1], vs[2]); }
   const sb = h.match(/^sb-(\d{4})$/);
   if (sb && BOX[+sb[1]]) { view = "gc"; tab = "history"; renderGameCenter(+sb[1]); }
   document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.id === "view-" + view));
