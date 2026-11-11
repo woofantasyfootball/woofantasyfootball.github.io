@@ -1,4 +1,4 @@
-/* 2026 league transactions from ESPN's activity feed (adds, drops, waiver claims, trades), pulled Nov 10 2026.
+/* 2026 league transactions from ESPN's activity feed (adds, drops, waiver claims, trades), pulled Nov 11 2026.
    Format per line: date|kind|manager|addName|addPos|dropName|dropPos   kind: F free agent, W waiver claim, D drop only
    Trades: date|T|from>to>Player|POS~from>to>Player|POS... */
 const TX_RAW = `2026-08-10|F|sop|Jaguars D/ST|DST|Browns D/ST|DST
@@ -131,7 +131,15 @@ const TX_RAW = `2026-08-10|F|sop|Jaguars D/ST|DST|Browns D/ST|DST
 2026-11-05|F|sam|Chad Ryland|K|
 2026-11-06|F|sop|Kaelon Black|RB|
 2026-11-06|F|sop|Antonio Williams|WR|Jordan Mason|RB
-2026-11-06|F|sop|Devin Singletary|RB|Antonio Williams|WR`;
+2026-11-06|F|sop|Devin Singletary|RB|Antonio Williams|WR
+2026-11-10|D|sop||Adonai Mitchell|WR
+2026-11-11|W|paul|Rico Dowdle|RB|Tyler Allgeier|RB
+2026-11-11|W|sebas|Fernando Mendoza|QB|Devaughn Vele|WR
+2026-11-11|W|dom|Reggie Virgil|WR|Michael Wilson|WR
+2026-11-11|W|paul|Aaron Rodgers|QB|Shedeur Sanders|QB
+2026-11-11|F|sop|Tutu Atwell|WR|Devin Singletary|RB
+2026-11-11|F|dom|Josh Downs|WR|Reggie Virgil|WR
+2026-11-11|F|jaxon|Tank Dell|WR|Will Shipley|RB`;
 const TX = TX_RAW.split("\n").map((l) => {
   const f = l.split("|"), date = f[0], kind = f[1];
   if (kind === "T") {
