@@ -50,6 +50,7 @@ A week counts as final only when every matchup in it has a winner set (not "UNDE
      zeros or duds, and what it means for each team's record/standings/streak. If the game was boring, talk about the state of each team instead.
    - `HEADLINES`: set `week` to the new CURRENT_WEEK, write a new lead story (`title` + gold `em` ending + `text`) about the
      biggest storyline, and 4 `side` items ("Around the league"). Use `{managerKey}` tokens for links.
+     Drop the optional `kicker` field (it's only for breaking news, like a midweek trade; it turns the lead red and adds a BREAKING ticker item).
    - Voice for both: like the existing ones. Casual, a little trash talk, never mean, every number must be right. No em dashes.
 6. **index.html**: update any hard-coded week text (lead story, "Week N Matchups", Rosters subtitle, footer "through Week N of 2026"). Grep for the old week number.
 
