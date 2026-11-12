@@ -109,13 +109,14 @@ const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:["Dalton Kincaid",5
    {sop} style tokens become manager links. Casual voice, no em dashes, facts only. */
 const HEADLINES = {
   week: 10,
-  lead: { title: "Seven teams, one game apart.", em: "Week 10 gets messy.",
-          text: "Seeds 3 through 9 are all 5-4 or 4-5, and five weeks are left. {sop} and {kurt} play for the 3 seed, {rob} and {sebas} fight over the last playoff spot, and {jp} sits at 8-1 with five straight wins waiting for somebody to stop him. Trade deadline is Wednesday at noon." },
+  kicker: "Breaking news &middot; Nov 12",
+  lead: { title: "Ron ships JSN to Sam", em: "in a 6-player blockbuster.",
+          text: "{ron} sends Jaxon Smith-Njigba (25.8 a game), Jameson Williams, Travis Kelce and Carnell Tate to {sam} for Justin Jefferson and Javonte Williams. Sam drops Courtland Sutton and AJ Barner to make room. Both trades tonight were accepted and are in the 24-hour review window, and it takes 4 veto votes to kill one. Sam gets the best WR in the league right as he faces 8-1 {jp}." },
   side: [
+    { t: "Breaking: {sebas} lands Caleb Williams", s: "Ron's busy night continues. He sends Caleb Williams (18.4 a game) to Sebas for DeMario Douglas. Sebas has been streaming QBs all week, so this fills the biggest hole on his roster." },
     { t: "{sop} vs {kurt} for the 3 seed", s: "Both 5-4. Sop has lost three straight, Kurt has won two. Kurt's lineup averages 123.9 to Sop's 117.4." },
-    { t: "{rob} vs {sebas}, the 6 seed on the line", s: "Both 4-5. Sebas has won three in a row, but Rob's lineup is averaging 132.3 to 121.9." },
-    { t: "Can {paul} finally get one?", s: "0-9 and facing {ron}, who has dropped two straight. Ron's lineup averages 127.9 to Paul's 111.1. The bar challenge is watching." },
-    { t: "Last call: trade deadline Wed at noon", s: "Get your offers in. Tonight's Sign is Isaiah Likely at +195." }
+    { t: "Can {paul} finally get one?", s: "0-9 and facing {ron}, who now has Jefferson and Javonte Williams. The bar challenge is watching." },
+    { t: "Last call: trade deadline Wed at noon", s: "Two deals done tonight. Who's next? Tonight's Sign is Isaiah Likely at +195." }
   ]
 };
 /* RECAPS[year][week] = [{ a, b, t: headline, x: write-up }]. a/b match the game's managers in any order. */

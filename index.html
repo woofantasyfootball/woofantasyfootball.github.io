@@ -1018,6 +1018,7 @@ function deadlineTxt() {
     const [w, wp, l, lp] = g[1] > g[3] ? [m, g[1], g[2], g[3]] : [g[2], g[3], m, g[1]];
     items.push(`<span class="crawl-item"><i>WK ${lastWk} FINAL</i><b>${esc(team26(w)[1].trim())} ${f2(wp)}</b>, ${esc(team26(l)[1].trim())} ${f2(lp)}</span>`); });
   SCHEDULE_26.filter((g) => g[0] === CURRENT_WEEK).forEach((g) => items.push(`<span class="crawl-item"><i>WK ${CURRENT_WEEK}</i>${esc(N(g[1]))} (${team26(g[1])[2]}-${team26(g[1])[3]}) vs ${esc(N(g[2]))} (${team26(g[2])[2]}-${team26(g[2])[3]})</span>`));
+  if (HEADLINES.kicker) items.unshift(`<span class="crawl-item"><i>BREAKING</i>${esc(HEADLINES.lead.title.replace(/\{(\w+)\}/g, (_, m) => N(m)))} ${esc(HEADLINES.lead.em)}</span>`);
   items.push(`<span class="crawl-item"><i>TRADE DEADLINE</i>${deadlineTxt().long}</span>`);
   items.push(`<span class="crawl-item"><i>ROAD TO SUPER BOWL VI</i>${14 - CURRENT_WEEK + 1} regular season weeks left. Top 6 make it, Super Bowl VI is Week 17</span>`);
   const t = signsTally();
@@ -1038,7 +1039,7 @@ function renderHome() {
   const tok = (str) => esc(str).replace(/\{(\w+)\}/g, (_, m) => (MANAGERS[m] ? ml(m) : m));
   const H = HEADLINES;
   $("#lead-main").innerHTML = `
-    <span class="kicker">Week ${H.week} &middot; Lead story</span>
+    <span class="kicker"${H.kicker ? ' style="color:var(--miss)"' : ""}>${H.kicker || `Week ${H.week} &middot; Lead story`}</span>
     <h1>${tok(H.lead.title)} <em>${tok(H.lead.em)}</em></h1>
     <p>${tok(H.lead.text)}</p>`;
   $("#lead-side").innerHTML = `<span class="kicker">Around the league</span>` +

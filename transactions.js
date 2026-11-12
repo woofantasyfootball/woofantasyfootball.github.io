@@ -1,4 +1,4 @@
-/* 2026 league transactions from ESPN's activity feed (adds, drops, waiver claims, trades), pulled Nov 11 2026.
+/* 2026 league transactions from ESPN's activity feed (adds, drops, waiver claims, trades), pulled Nov 12 2026.
    Format per line: date|kind|manager|addName|addPos|dropName|dropPos   kind: F free agent, W waiver claim, D drop only
    Trades: date|T|from>to>Player|POS~from>to>Player|POS... */
 const TX_RAW = `2026-08-10|F|sop|Jaguars D/ST|DST|Browns D/ST|DST
@@ -139,7 +139,19 @@ const TX_RAW = `2026-08-10|F|sop|Jaguars D/ST|DST|Browns D/ST|DST
 2026-11-11|W|paul|Aaron Rodgers|QB|Shedeur Sanders|QB
 2026-11-11|F|sop|Tutu Atwell|WR|Devin Singletary|RB
 2026-11-11|F|dom|Josh Downs|WR|Reggie Virgil|WR
-2026-11-11|F|jaxon|Tank Dell|WR|Will Shipley|RB`;
+2026-11-11|F|jaxon|Tank Dell|WR|Will Shipley|RB
+2026-11-11|F|sebas|Kirk Cousins|QB|J.J. McCarthy|QB
+2026-11-11|F|sebas|Corey Kiner|RB|Tyler Bass|K
+2026-11-11|F|sebas|Drew Lock|QB|Fernando Mendoza|QB
+2026-11-12|F|dom|Colts D/ST|DST|Bears D/ST|DST
+2026-11-12|F|sop|Omar Cooper Jr.|WR|
+2026-11-12|D|sam||Chad Ryland|K
+2026-11-12|F|sam|Vikings D/ST|DST|
+2026-11-12|D|sam||Broncos D/ST|DST
+2026-11-12|F|sam|AJ Barner|TE|
+2026-11-12|F|sebas|Malik Washington|WR|Kirk Cousins|QB
+2026-11-12|T|ron>sam>Jaxon Smith-Njigba|WR~ron>sam>Jameson Williams|WR~ron>sam>Travis Kelce|TE~ron>sam>Carnell Tate|WR~sam>ron>Justin Jefferson|WR~sam>ron>Javonte Williams|RB
+2026-11-12|T|ron>sebas>Caleb Williams|QB~sebas>ron>DeMario Douglas|WR`;
 const TX = TX_RAW.split("\n").map((l) => {
   const f = l.split("|"), date = f[0], kind = f[1];
   if (kind === "T") {
