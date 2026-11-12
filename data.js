@@ -109,13 +109,13 @@ const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:["Dalton Kincaid",5
    {sop} style tokens become manager links. Casual voice, no em dashes, facts only. */
 const HEADLINES = {
   week: 10,
-  lead: { title: "#GILLMODE drops 163.22 on Ron, who benched", em: "36.18 from Jordan Love.",
-          text: "{jaxon} beat {ron} by 80.46, the 6th biggest blowout in league history, behind Kenneth Walker III (36.3) and Puka Nacua (35.0). Ron started Caleb Williams (12.76) over Love and still loses by 57.04 even if he flips it. Jaxon is 6-3, alone in 2nd, and has scored 315.90 the last two weeks." },
+  lead: { title: "Seven teams, one game apart.", em: "Week 10 gets messy.",
+          text: "Seeds 3 through 9 are all 5-4 or 4-5, and five weeks are left. {sop} and {kurt} play for the 3 seed, {rob} and {sebas} fight over the last playoff spot, and {jp} sits at 8-1 with five straight wins waiting for somebody to stop him. Trade deadline is Wednesday at noon." },
   side: [
-    { t: "{dom} benched 35.36 from C.J. Stroud", s: "Started Trevor Lawrence (13.58) and lost to {sam} by 8.70. That one swap wins it." },
-    { t: "{sebas} has won three straight", s: "Bomb Squad went from 1-5 to 4-5 and holds the 6th seed. {rob} is next, also 4-5." },
-    { t: "Defending champ {sop} drops three in a row", s: "Was 5-1, now 5-4. {kurt} is up next at 5-4 too." },
-    { t: "{paul} is 0-9", s: "Five weeks left to find a win. {ron} is up next, fresh off an 82.76 and the whale parlay." }
+    { t: "{sop} vs {kurt} for the 3 seed", s: "Both 5-4. Sop has lost three straight, Kurt has won two. Kurt's lineup averages 123.9 to Sop's 117.4." },
+    { t: "{rob} vs {sebas}, the 6 seed on the line", s: "Both 4-5. Sebas has won three in a row, but Rob's lineup is averaging 132.3 to 121.9." },
+    { t: "Can {paul} finally get one?", s: "0-9 and facing {ron}, who has dropped two straight. Ron's lineup averages 127.9 to Paul's 111.1. The bar challenge is watching." },
+    { t: "Last call: trade deadline Wed at noon", s: "Get your offers in. Tonight's Sign is Isaiah Likely at +195." }
   ]
 };
 /* RECAPS[year][week] = [{ a, b, t: headline, x: write-up }]. a/b match the game's managers in any order. */
