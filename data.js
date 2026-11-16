@@ -103,7 +103,8 @@ const SIGNS = [
   { wk:9, tnf:["Jakobi Meyers",325,"miss"],    snf:["Luther Burden III",145,"hit"],mnf:["DJ Moore",290,"miss"] },
   { wk:10, tnf:["Isaiah Likely",195,"hit"],   snf:["Germie Bernard",295,"miss"],                          mnf:null }
 ];
-const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:["Dalton Kincaid",550,"miss"], snf:null } ];
+const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:["Dalton Kincaid",550,"miss"], snf:null },
+  { wk:10, tnf:["Malik Nabers",660,"miss"], mnf:null, snf:null } ];
 
 /* ===== Headlines + weekly recaps. Rewritten every week by the Tuesday update. =====
    {sop} style tokens become manager links. Casual voice, no em dashes, facts only. */
