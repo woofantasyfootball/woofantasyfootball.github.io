@@ -764,7 +764,7 @@ nav.tabs a .caret { font-size: 11px; margin-left: 4px; opacity: 0.6; }
         </div>
         <div class="card">
           <div class="card-head"><h3>The Trends (Live Bets)</h3><span class="lamp" id="trends-rec"></span></div>
-          <div class="tbl-wrap"><table id="trends"><thead><tr><th>Wk</th><th>TNF</th><th>MNF</th><th>SNF</th></tr></thead><tbody></tbody></table></div>
+          <div class="tbl-wrap"><table id="trends"><thead><tr><th>Wk</th><th>TNF</th><th>SNF</th><th>MNF</th></tr></thead><tbody></tbody></table></div>
         </div>
       </div>
     </div>
@@ -1290,7 +1290,7 @@ function renderBets() {
   $("#whale-full").innerHTML = html;
   const cell = (p) => { if (!p) return `<span class="pick open">&nbsp;</span>`; const [n, o, r, k] = p; return `<span class="pick ${r}">${esc(n)}<small>${k === "spread" ? "Spread" : oddsTxt(o)} &middot; ${r === "hit" ? "Hit" : r === "miss" ? "Miss" : "Open"}</small></span>`; };
   const draw = (data, cols, sel) => { const m = new Map(data.map((r) => [r.wk, r])); let b = ""; for (let wk = data[0].wk; wk <= 16; wk++) { const r = m.get(wk); b += `<tr><td class="yr" style="font-size:18px">${wk}</td>${cols.map((c) => `<td>${cell(r && r[c])}</td>`).join("")}</tr>`; } $(sel + " tbody").innerHTML = b; };
-  draw(SIGNS, ["tnf","snf","mnf"], "#signs"); draw(TRENDS, ["tnf","mnf","snf"], "#trends");
+  draw(SIGNS, ["tnf","snf","mnf"], "#signs"); draw(TRENDS, ["tnf","snf","mnf"], "#trends");
   const t = signsTally();
   $("#signs-rec").textContent = `${t.w}-${t.l}`;
   $("#signs-tally").innerHTML = `<div><b>${t.w}-${t.l}</b>Record</div><div><b>${Math.round(t.w / (t.w + t.l) * 100)}%</b>Hit rate</div><div><b class="${t.units >= 0 ? "pos" : ""}">${t.units >= 0 ? "+" : ""}${t.units.toFixed(2)}u</b>Net, 1u per pick</div>`;
