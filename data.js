@@ -101,7 +101,7 @@ const SIGNS = [
   { wk:7, tnf:["Demario Douglas",320,"miss"],  snf:["Travis Kelce",220,"miss"],    mnf:["CeeDee Lamb",125,"hit"] },
   { wk:8, tnf:["Tetairoa McMillan",175,"miss"],snf:["Saquon Barkley",142,"hit"],   mnf:["Luther Burden III",225,"hit"] },
   { wk:9, tnf:["Jakobi Meyers",325,"miss"],    snf:["Luther Burden III",145,"hit"],mnf:["DJ Moore",290,"miss"] },
-  { wk:10, tnf:["Isaiah Likely",195,"open"],   snf:["Germie Bernard",295,"open"],                          mnf:null }
+  { wk:10, tnf:["Isaiah Likely",195,"hit"],   snf:["Germie Bernard",295,"miss"],                          mnf:null }
 ];
 const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:["Dalton Kincaid",550,"miss"], snf:null } ];
 
