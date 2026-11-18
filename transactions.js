@@ -156,7 +156,15 @@ const TX_RAW = `2026-08-10|F|sop|Jaguars D/ST|DST|Browns D/ST|DST
 2026-11-12|F|rob|Audric Estime|RB|Seth McGowan|RB
 2026-11-12|F|rob|Andre Szmyt|K|Cairo Santos|K
 2026-11-13|F|dom|Emmett Johnson|RB|David Montgomery|RB
-2026-11-15|D|sop||Omar Cooper Jr.|WR`;
+2026-11-15|D|sop||Omar Cooper Jr.|WR
+2026-11-18|W|sop|David Montgomery|RB|Kaelon Black|RB
+2026-11-18|W|rob|Cam Ward|QB|Audric Estime|RB
+2026-11-18|W|jp|Bears D/ST|DST|Rachaad White|RB
+2026-11-18|W|sop|Chig Okonkwo|TE|Tutu Atwell|WR
+2026-11-18|W|rob|Tyler Bass|K|Andre Szmyt|K
+2026-11-18|F|sop|Kirk Cousins|QB|Drake Maye|QB
+2026-11-18|F|sop|Ryan Flournoy|WR|Germie Bernard|WR
+2026-11-18|F|dom|Lions D/ST|DST|Colts D/ST|DST`;
 const TX = TX_RAW.split("\n").map((l) => {
   const f = l.split("|"), date = f[0], kind = f[1];
   if (kind === "T") {

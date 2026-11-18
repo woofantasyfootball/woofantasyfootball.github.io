@@ -110,13 +110,13 @@ const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:["Dalton Kincaid",5
    {sop} style tokens become manager links. Casual voice, no em dashes, facts only. */
 const HEADLINES = {
   week: 11,
-  lead: { title: "{paul} finally wins one,", em: "and {ron} gets the whale again.",
-          text: "WHEN THEY GO? Week 10. {paul} beat {ron} 90.82 to 82.70 behind Chuba Hubbard (34.2) for his first win of the year, the lowest winning score of the season. Ron had the league's low score for the second straight week in his first game since trading Jaxon Smith-Njigba, who put up 31.1 for {sam}. Justin Jefferson and Javonte Williams gave Ron 24.1 combined. Paul is 1-9, still 3 games out of 9th with 4 weeks left." },
+  lead: { title: "{jp} vs {jaxon} is 1 vs 2,", em: "and #GILLMODE is limping in.",
+          text: "JP is 8-2 and Jaxon is 6-4, just 7.54 points behind him for the most in the league. But Puka Nacua is on IR and Kenneth Walker III is questionable, so Jaxon's current lineup averages 111.7 to JP's 130.5. Seeds 1 and 2 get the playoff bye, and four weeks are left. The trade deadline passed at noon with no deals, so these are the rosters." },
   side: [
-    { t: "{jp} vs {jaxon}, 1 vs 2", s: "JP is 8-2 coming off a 24.92 loss to {sam}. Jaxon is 6-4 with the second-most points in the league, just 7.54 behind JP." },
-    { t: "Defending champ {sop} has lost four straight", s: "Was 5-1, now 5-5 and the 6 seed. His best possible lineup still loses to {kurt} by 0.48. {dom} is right behind him at 5-5, and {rob} is next." },
-    { t: "{sebas} rides Ja'Marr Chase to four straight", s: "Chase has 30-plus three weeks running (34.1 this week). Bomb Squad went from 1-5 to 5-5 and the 5 seed. {sam} is next." },
-    { t: "Trade deadline: Wed at noon", s: "Last chance to make a move before the stretch run. Monday's Sign, Oronde Gadsden II at +500, missed with 1 catch for 7 yards." }
+    { t: "{sop} tries to stop the bleeding vs {rob}", s: "Four straight losses dropped Sop to 5-5 and the 6 seed. Rob is 4-6 and the 8 seed, so the loser is in real trouble. Rob's lineup averages 131.9 to Sop's 126.0." },
+    { t: "{sebas} goes for five straight vs {sam}", s: "Bomb Squad climbed from 1-5 to 5-5. Sam is 6-4 and the 4 seed. Sebas has the best lineup average of the week at 135.9, Sam is at 121.8." },
+    { t: "{ron} has lost three straight", s: "And now he gets {kurt}, who has won three in a row. Ron's lineup averages 109.8, the lowest of the week. Kurt's is at 126.8." },
+    { t: "{paul} goes for two in a row", s: "He got off the schneid last week. {dom} is 5-5 and the 7 seed, one spot out, and their lineups are basically even (115.2 to 114.1)." }
   ]
 };
 /* RECAPS[year][week] = [{ a, b, t: headline, x: write-up }]. a/b match the game's managers in any order. */
