@@ -1,4 +1,4 @@
-/* ===== Woo Fantasy League data. ESPN league 848216391, pulled Nov 17 2026, plus the league history doc. ===== */
+/* ===== Woo Fantasy League data. ESPN league 848216391, pulled Nov 24 2026, plus the league history doc. ===== */
 const MANAGERS = {
   sop:   { name: "Sop",   full: "Michael Sopko",      aka: "" ,   div: "East" },
   kurt:  { name: "Kurt",  full: "Kurt Sommerfeld",    aka: "",    div: "West" },
@@ -20,29 +20,29 @@ const STANDINGS = {
   2023: [["sop","Sop's RaftusBeerNelk",4,10,1456.24,1691.82,8,7],["kurt","Stroke my Chubb",10,4,1608.12,1513.3,2,3],["sam","Team PAPA",3,11,1534.76,1814.28,10,8],["paul","Your Ass Hurts",7,7,1731.04,1702.12,5,1],["rob","Bijan Mustard",3,11,1605.8,1758.24,9,9],["jaxon","Jerryatric MFs",7,7,1671.06,1603.82,6,2],["sebas","Amon a Mission",10,4,1876.24,1709.76,3,6],["ron","Fanta Claus is Coming 2 Town",9,5,1762.62,1600.14,4,5],["dom","Easy pickens",6,8,1688.58,1720.4,7,10],["jp","The Infinity Stone Feelers",11,3,1749.3,1569.88,1,4]],
   2024: [["sop","Sop's RaftusBeerNelk",8,6,1684,1694.3,4,5],["kurt","Just Cage Me",6,8,1788.84,1709.76,7,9],["sam","Team PAPA",7,7,1685.82,1703.48,5,4],["paul","Your Ass Hurts",7,7,1824.98,1678.28,2,3],["rob","Bijan Mustard",5,9,1670.12,1656.78,8,8],["jaxon","Dugg Slug",5,9,1642.06,1702.86,9,10],["sebas","Amon a Mission",11,3,1913.66,1668.7,1,2],["ron","Fanta Claus is Coming 2 Town",7,7,1504.46,1643.7,6,6],["dom","Easy pickens",5,9,1487.42,1823.1,10,7],["jp","The Infinity Stone Feelers",9,5,1680.8,1601.2,3,1]],
   2025: [["sop","Sop's RaftusBeerNelk",11,3,1809.94,1574.52,1,1],["kurt","LAMBO",5,9,1527.1,1634.66,9,9],["sam","Team PAPA",6,8,1517.96,1609.8,8,10],["paul","Your Ass Hurts",6,8,1663.96,1644.1,6,2],["rob","Do it for Skat",10,4,1938.4,1634.16,3,5],["jaxon","Jack Me Goff",7,7,1554.46,1716.3,5,6],["sebas","Amon a Mission (kinda)",7,7,1653.5,1755.68,4,3],["ron","Fanta Claus Coming 2 Town",8,6,1653.22,1611.4,2,4],["dom","King of the hill",4,10,1527.4,1610.1,10,8],["jp","3Time",6,8,1618.38,1673.6,7,7]],
-  2026: [["sop","Ohio State University",5,5,1260.92,1248.56,6,0],["kurt","Bada Bing",6,4,1244.18,1163.12,3,0],["sam","Team PAPA",6,4,1194.06,1101.74,4,0],["paul","WHEN THEY GO?",1,9,1007.16,1295.88,10,0],["rob","Do it for Roj",4,6,1200.56,1228.26,8,0],["jaxon","#GILLMODE",6,4,1328.3,1182.74,2,0],["sebas","Bomb Squad",5,5,1261.68,1241.62,5,0],["ron","Fantsgiving",4,6,1125.42,1233.9,9,0],["dom","Likely to lose",5,5,1096.16,1218.42,7,0],["jp","3Time",8,2,1335.84,1140.04,1,0]]
+  2026: [["sop","Ohio State University",6,5,1381,1356.58,5,0],["kurt","Bada Bing",7,4,1385.54,1296.8,3,0],["sam","Team PAPA",7,4,1318.66,1192.48,4,0],["paul","WHEN THEY GO?",1,10,1106.14,1405.72,10,0],["rob","Do it for Roj",4,7,1308.58,1348.34,8,0],["jaxon","#GILLMODE",7,4,1450.7,1291.5,2,0],["sebas","Bomb Squad",5,6,1352.42,1366.22,7,0],["ron","Fantsgiving",4,7,1259.1,1375.26,9,0],["dom","Likely to lose",6,5,1206,1317.4,6,0],["jp","3Time",8,3,1444.6,1262.44,1,0]]
 };
 
 /* Head to head, rows/cols in ORDER. "regW.regL.playoffW.playoffL" (playoffs = championship bracket only) */
 const H2H = {
-  sop:["0.0.0.0","2.4.0.0","9.2.0.1","7.2.1.0","5.6.0.0","2.4.0.0","4.7.0.1","4.4.0.0","5.7.1.0","3.3.0.0"],
-  kurt:["4.2.0.0","0.0.0.0","4.2.0.0","7.5.0.0","3.3.0.0","6.5.0.1","3.4.0.1","8.3.0.1","5.5.0.0","5.6.0.0"],
-  sam:["2.9.1.0","2.4.0.0","0.0.0.0","4.2.0.0","3.8.0.0","2.5.0.0","5.7.0.0","5.4.0.0","5.6.0.1","4.3.0.0"],
-  paul:["2.7.0.1","5.7.0.0","2.4.0.0","0.0.0.0","3.4.2.0","5.6.1.0","2.4.1.1","7.4.0.0","2.4.0.1","6.6.2.0"],
-  rob:["6.5.0.0","3.3.0.0","8.3.0.0","4.3.0.2","0.0.0.0","5.4.0.0","3.9.0.0","1.5.0.0","2.10.0.0","2.4.0.0"],
-  jaxon:["4.2.0.0","5.6.1.0","5.2.0.0","6.5.0.1","4.5.0.0","0.0.0.0","0.6.0.0","6.6.0.0","3.3.1.1","8.4.0.1"],
-  jp:["7.4.1.0","4.3.1.0","7.5.0.0","4.2.1.1","9.3.0.0","6.0.0.0","0.0.0.0","5.1.1.0","6.5.2.0","3.6.2.0"],
-  dom:["4.4.0.0","3.8.1.0","4.5.0.0","4.7.0.0","5.1.0.0","6.6.0.0","1.5.0.1","0.0.0.0","1.5.0.0","5.6.0.0"],
-  sebas:["7.5.0.1","5.5.0.0","6.5.1.0","4.2.1.0","10.2.0.0","3.3.1.1","5.6.0.2","5.1.0.0","0.0.0.0","4.2.0.1"],
-  ron:["3.3.0.0","6.5.0.0","3.4.0.0","6.6.0.2","4.2.0.0","4.8.1.0","6.3.0.2","6.5.0.0","2.4.1.0","0.0.0.0"]
+  sop:["0.0.0.0","2.4.0.0","9.2.0.1","7.2.1.0","6.6.0.0","2.4.0.0","4.7.0.1","4.4.0.0","5.7.1.0","3.3.0.0"],
+  kurt:["4.2.0.0","0.0.0.0","4.2.0.0","7.5.0.0","3.3.0.0","6.5.0.1","3.4.0.1","8.3.0.1","5.5.0.0","6.6.0.0"],
+  sam:["2.9.1.0","2.4.0.0","0.0.0.0","4.2.0.0","3.8.0.0","2.5.0.0","5.7.0.0","5.4.0.0","6.6.0.1","4.3.0.0"],
+  paul:["2.7.0.1","5.7.0.0","2.4.0.0","0.0.0.0","3.4.2.0","5.6.1.0","2.4.1.1","7.5.0.0","2.4.0.1","6.6.2.0"],
+  rob:["6.6.0.0","3.3.0.0","8.3.0.0","4.3.0.2","0.0.0.0","5.4.0.0","3.9.0.0","1.5.0.0","2.10.0.0","2.4.0.0"],
+  jaxon:["4.2.0.0","5.6.1.0","5.2.0.0","6.5.0.1","4.5.0.0","0.0.0.0","1.6.0.0","6.6.0.0","3.3.1.1","8.4.0.1"],
+  jp:["7.4.1.0","4.3.1.0","7.5.0.0","4.2.1.1","9.3.0.0","6.1.0.0","0.0.0.0","5.1.1.0","6.5.2.0","3.6.2.0"],
+  dom:["4.4.0.0","3.8.1.0","4.5.0.0","5.7.0.0","5.1.0.0","6.6.0.0","1.5.0.1","0.0.0.0","1.5.0.0","5.6.0.0"],
+  sebas:["7.5.0.1","5.5.0.0","6.6.1.0","4.2.1.0","10.2.0.0","3.3.1.1","5.6.0.2","5.1.0.0","0.0.0.0","4.2.0.1"],
+  ron:["3.3.0.0","6.6.0.0","3.4.0.0","6.6.0.2","4.2.0.0","4.8.1.0","6.3.0.2","6.5.0.0","2.4.1.0","0.0.0.0"]
 };
 /* Championship bracket record [W, L] 2021-2025 */
 const PLAYOFFS = { sop:[2,2], kurt:[0,3], sam:[1,1], paul:[6,3], rob:[0,2], jaxon:[2,3], jp:[8,1], dom:[1,1], sebas:[3,5], ron:[2,4] };
-/* All-play record (vs every team, every week), regular season 2021 through 2026 wk 10 */
-const ALLPLAY = { sop:[356,364], kurt:[372,348], sam:[307,413], paul:[359,361], rob:[366,354], jaxon:[355,365], jp:[383,337], dom:[329,391], sebas:[436,284], ron:[337,383] };
+/* All-play record (vs every team, every week), regular season 2021 through 2026 wk 11 */
+const ALLPLAY = { sop:[361,368], kurt:[381,348], sam:[314,415], paul:[360,369], rob:[368,361], jaxon:[361,368], jp:[386,343], dom:[333,396], sebas:[436,293], ron:[345,384] };
 /* Weekly highest and lowest score counts, regular season */
-const WEEK_HIGH = { sop:7, kurt:5, sam:6, paul:10, rob:8, jaxon:7, jp:11, dom:5, sebas:14, ron:7 };
-const WEEK_LOW  = { sop:9, kurt:4, sam:10, paul:6, rob:8, jaxon:9, jp:6, dom:8, sebas:4, ron:16 };
+const WEEK_HIGH = { sop:7, kurt:6, sam:6, paul:10, rob:8, jaxon:7, jp:11, dom:5, sebas:14, ron:7 };
+const WEEK_LOW  = { sop:9, kurt:4, sam:10, paul:6, rob:8, jaxon:9, jp:6, dom:8, sebas:5, ron:16 };
 
 /* Game lists: [year, week, R/P/C (regular, playoff, consolation), manager, team, points, opponent, opp points] */
 const TOP_SCORES = [[2021,14,"R","dom","Two girls one kupp",212.32,"sop",159.72],[2023,5,"R","rob","Bijan Mustard",193.28,"sebas",82.46],[2024,15,"P","sam","Team PAPA",192.38,"sop",144.62],[2024,9,"R","kurt","Just Cage Me",191.74,"dom",85.1],[2023,3,"R","ron","Fanta Claus is Coming 2 Town",181.38,"paul",166.78],[2024,14,"R","sam","Team PAPA",181.38,"dom",98.64],[2023,12,"R","sebas","Amon a Mission",179.56,"dom",145.24],[2024,16,"P","sebas","Amon a Mission",175.28,"sam",136.46],[2022,9,"R","sop","Sop's RaftusBeerNelk",174.22,"sam",106],[2025,10,"R","sop","Sop's RaftusBeerNelk",172.84,"jaxon",104.9]];
@@ -55,20 +55,20 @@ const NAILBITERS = [[2024,3,"R","ron",152.58,"paul",152.54,0.04],[2025,17,"C","j
 
 /* 2026 weekly results: [week, points, opponent, opp points] */
 const W26 = {
-  sop:[[1,157.42,"dom",111.6],[2,103.02,"rob",77.5],[3,146,"sam",130.78],[4,109.14,"jp",156.72],[5,147.56,"sebas",130.8],[6,125.5,"paul",77.22],[7,120.04,"ron",134.22],[8,119.06,"jaxon",152.68],[9,113.36,"sebas",129.28],[10,119.82,"kurt",147.76]],
-  kurt:[[1,155.86,"paul",97.02],[2,103.64,"jp",152.62],[3,95.74,"ron",99.88],[4,115.7,"dom",100.08],[5,166.86,"jaxon",137.2],[6,103.78,"rob",137.54],[7,114.9,"sebas",116.18],[8,100.68,"sam",98.1],[9,139.26,"paul",104.68],[10,147.76,"sop",119.82]],
-  sam:[[1,100.9,"jp",129.96],[2,127.48,"sebas",90.1],[3,130.78,"sop",146],[4,97.82,"rob",102.96],[5,142.46,"paul",121.48],[6,127.06,"ron",104.74],[7,113.62,"jaxon",83.6],[8,98.1,"kurt",100.68],[9,125.18,"dom",116.48],[10,130.66,"jp",105.74]],
-  paul:[[1,97.02,"kurt",155.86],[2,108.56,"ron",136.52],[3,108.72,"dom",113.78],[4,112.68,"jaxon",142.72],[5,121.48,"sam",142.46],[6,77.22,"sop",125.5],[7,94.28,"jp",130.52],[8,91.7,"rob",126.56],[9,104.68,"kurt",139.26],[10,90.82,"ron",82.7]],
-  rob:[[1,135,"sebas",154.16],[2,77.5,"sop",103.02],[3,138.54,"jaxon",122.6],[4,102.96,"sam",97.82],[5,119,"jp",146.9],[6,137.54,"kurt",103.78],[7,112.12,"dom",116.12],[8,126.56,"paul",91.7],[9,116.54,"jp",141.16],[10,134.8,"sebas",151]],
-  jaxon:[[1,141.56,"ron",112.56],[2,138.48,"dom",106.06],[3,122.6,"rob",138.54],[4,142.72,"paul",112.68],[5,137.2,"kurt",166.86],[6,126.08,"sebas",96.12],[7,83.6,"sam",113.62],[8,152.68,"sop",119.06],[9,163.22,"ron",82.76],[10,120.16,"dom",134.48]],
-  jp:[[1,129.96,"sam",100.9],[2,152.62,"kurt",103.64],[3,133.46,"sebas",116.64],[4,156.72,"sop",109.14],[5,146.9,"rob",119],[6,92.9,"dom",108.94],[7,130.52,"paul",94.28],[8,145.86,"ron",140.3],[9,141.16,"rob",116.54],[10,105.74,"sam",130.66]],
-  dom:[[1,111.6,"sop",157.42],[2,106.06,"jaxon",138.48],[3,113.78,"paul",108.72],[4,100.08,"kurt",115.7],[5,117.12,"ron",94.26],[6,108.94,"jp",92.9],[7,116.12,"rob",112.12],[8,71.5,"sebas",153.48],[9,116.48,"sam",125.18],[10,134.48,"jaxon",120.16]],
-  sebas:[[1,154.16,"rob",135],[2,90.1,"sam",127.48],[3,116.64,"jp",133.46],[4,123.92,"ron",137.48],[5,130.8,"sop",147.56],[6,96.12,"jaxon",126.08],[7,116.18,"kurt",114.9],[8,153.48,"dom",71.5],[9,129.28,"sop",113.36],[10,151,"rob",134.8]],
-  ron:[[1,112.56,"jaxon",141.56],[2,136.52,"paul",108.56],[3,99.88,"kurt",95.74],[4,137.48,"sebas",123.92],[5,94.26,"dom",117.12],[6,104.74,"sam",127.06],[7,134.22,"sop",120.04],[8,140.3,"jp",145.86],[9,82.76,"jaxon",163.22],[10,82.7,"paul",90.82]]
+  sop:[[1,157.42,"dom",111.6],[2,103.02,"rob",77.5],[3,146,"sam",130.78],[4,109.14,"jp",156.72],[5,147.56,"sebas",130.8],[6,125.5,"paul",77.22],[7,120.04,"ron",134.22],[8,119.06,"jaxon",152.68],[9,113.36,"sebas",129.28],[10,119.82,"kurt",147.76],[11,120.08,"rob",108.02]],
+  kurt:[[1,155.86,"paul",97.02],[2,103.64,"jp",152.62],[3,95.74,"ron",99.88],[4,115.7,"dom",100.08],[5,166.86,"jaxon",137.2],[6,103.78,"rob",137.54],[7,114.9,"sebas",116.18],[8,100.68,"sam",98.1],[9,139.26,"paul",104.68],[10,147.76,"sop",119.82],[11,141.36,"ron",133.68]],
+  sam:[[1,100.9,"jp",129.96],[2,127.48,"sebas",90.1],[3,130.78,"sop",146],[4,97.82,"rob",102.96],[5,142.46,"paul",121.48],[6,127.06,"ron",104.74],[7,113.62,"jaxon",83.6],[8,98.1,"kurt",100.68],[9,125.18,"dom",116.48],[10,130.66,"jp",105.74],[11,124.6,"sebas",90.74]],
+  paul:[[1,97.02,"kurt",155.86],[2,108.56,"ron",136.52],[3,108.72,"dom",113.78],[4,112.68,"jaxon",142.72],[5,121.48,"sam",142.46],[6,77.22,"sop",125.5],[7,94.28,"jp",130.52],[8,91.7,"rob",126.56],[9,104.68,"kurt",139.26],[10,90.82,"ron",82.7],[11,98.98,"dom",109.84]],
+  rob:[[1,135,"sebas",154.16],[2,77.5,"sop",103.02],[3,138.54,"jaxon",122.6],[4,102.96,"sam",97.82],[5,119,"jp",146.9],[6,137.54,"kurt",103.78],[7,112.12,"dom",116.12],[8,126.56,"paul",91.7],[9,116.54,"jp",141.16],[10,134.8,"sebas",151],[11,108.02,"sop",120.08]],
+  jaxon:[[1,141.56,"ron",112.56],[2,138.48,"dom",106.06],[3,122.6,"rob",138.54],[4,142.72,"paul",112.68],[5,137.2,"kurt",166.86],[6,126.08,"sebas",96.12],[7,83.6,"sam",113.62],[8,152.68,"sop",119.06],[9,163.22,"ron",82.76],[10,120.16,"dom",134.48],[11,122.4,"jp",108.76]],
+  jp:[[1,129.96,"sam",100.9],[2,152.62,"kurt",103.64],[3,133.46,"sebas",116.64],[4,156.72,"sop",109.14],[5,146.9,"rob",119],[6,92.9,"dom",108.94],[7,130.52,"paul",94.28],[8,145.86,"ron",140.3],[9,141.16,"rob",116.54],[10,105.74,"sam",130.66],[11,108.76,"jaxon",122.4]],
+  dom:[[1,111.6,"sop",157.42],[2,106.06,"jaxon",138.48],[3,113.78,"paul",108.72],[4,100.08,"kurt",115.7],[5,117.12,"ron",94.26],[6,108.94,"jp",92.9],[7,116.12,"rob",112.12],[8,71.5,"sebas",153.48],[9,116.48,"sam",125.18],[10,134.48,"jaxon",120.16],[11,109.84,"paul",98.98]],
+  sebas:[[1,154.16,"rob",135],[2,90.1,"sam",127.48],[3,116.64,"jp",133.46],[4,123.92,"ron",137.48],[5,130.8,"sop",147.56],[6,96.12,"jaxon",126.08],[7,116.18,"kurt",114.9],[8,153.48,"dom",71.5],[9,129.28,"sop",113.36],[10,151,"rob",134.8],[11,90.74,"sam",124.6]],
+  ron:[[1,112.56,"jaxon",141.56],[2,136.52,"paul",108.56],[3,99.88,"kurt",95.74],[4,137.48,"sebas",123.92],[5,94.26,"dom",117.12],[6,104.74,"sam",127.06],[7,134.22,"sop",120.04],[8,140.3,"jp",145.86],[9,82.76,"jaxon",163.22],[10,82.7,"paul",90.82],[11,133.68,"kurt",141.36]]
 };
 /* Remaining 2026 schedule: [week, home, away] */
-const SCHEDULE_26 = [[11,"jp","jaxon"],[11,"sop","rob"],[11,"ron","kurt"],[11,"sam","sebas"],[11,"paul","dom"],[12,"rob","ron"],[12,"sebas","jp"],[12,"jaxon","paul"],[12,"sam","sop"],[12,"kurt","dom"],[13,"sebas","paul"],[13,"rob","sam"],[13,"dom","ron"],[13,"jp","sop"],[13,"kurt","jaxon"],[14,"dom","sop"],[14,"kurt","jp"],[14,"jaxon","rob"],[14,"ron","sebas"],[14,"paul","sam"]];
-const CURRENT_WEEK = 11;
+const SCHEDULE_26 = [[12,"rob","ron"],[12,"sebas","jp"],[12,"jaxon","paul"],[12,"sam","sop"],[12,"kurt","dom"],[13,"sebas","paul"],[13,"rob","sam"],[13,"dom","ron"],[13,"jp","sop"],[13,"kurt","jaxon"],[14,"dom","sop"],[14,"kurt","jp"],[14,"jaxon","rob"],[14,"ron","sebas"],[14,"paul","sam"]];
+const CURRENT_WEEK = 12;
 const TRADE_DEADLINE = "2026-11-18T12:00:00-05:00"; /* Wed Nov 18 at 12:00 PM ET, before Week 11 */
 const TRADE_DEADLINE_LABEL = "Wed, Nov 18 at noon";
 
@@ -92,7 +92,7 @@ const LAST_PLACE = [
 /* This season's last-place punishment, and the league rule */
 const PUNISHMENT_NOW = "24 Hour Bar Challenge";
 const SHAME_RULE = "Finish last, do the punishment. Skip it and you're kicked out of the league.";
-const WHALE = [[1,"paul",97.02],[2,"rob",77.5],[3,"kurt",95.74],[4,"sam",97.82],[5,"ron",84.32],[6,"ron",94.26],[7,"jaxon",83.6],[8,"dom",71.5],[9,"ron",82.76],[10,"ron",82.7]];
+const WHALE = [[1,"paul",97.02],[2,"rob",77.5],[3,"kurt",95.74],[4,"sam",97.82],[5,"ron",84.32],[6,"ron",94.26],[7,"jaxon",83.6],[8,"dom",71.5],[9,"ron",82.76],[10,"ron",82.7],[11,"sebas",90.74]];
 /* [player, odds, result] */
 const SIGNS = [
   { wk:4, tnf:["Roman Wilson",460,"hit"],      snf:["Darren Waller",270,"miss"],   mnf:["Devaughn Vele",230,"hit"] },
@@ -109,18 +109,30 @@ const TRENDS = [ { wk:9, tnf:["Bucky Irving",150,"hit"], mnf:["Dalton Kincaid",5
 /* ===== Headlines + weekly recaps. Rewritten every week by the Tuesday update. =====
    {sop} style tokens become manager links. Casual voice, no em dashes, facts only. */
 const HEADLINES = {
-  week: 11,
-  lead: { title: "{jp} vs {jaxon} is 1 vs 2,", em: "and #GILLMODE is limping in.",
-          text: "JP is 8-2 and Jaxon is 6-4, just 7.54 points behind him for the most in the league. But Puka Nacua is on IR and Kenneth Walker III is questionable, so Jaxon's current lineup averages 111.7 to JP's 130.5. Seeds 1 and 2 get the playoff bye, and four weeks are left. The trade deadline passed at noon with no deals, so these are the rosters." },
+  week: 12,
+  lead: { title: "{jp} drops two straight,", em: "and three teams are one game back.",
+          text: "JP is still the 1 seed at 8-3, but Jaxon, Kurt and Sam are all 7-4 now. Jaxon also passed him for the most points in the league, 1450.70 to 1444.60. Next up for JP is Sebas, whose lineup averages 128.8, the best of the week, to JP's 128.3. Three weeks left and only the top 2 get the bye." },
   side: [
-    { t: "{sop} tries to stop the bleeding vs {rob}", s: "Four straight losses dropped Sop to 5-5 and the 6 seed. Rob is 4-6 and the 8 seed, so the loser is in real trouble. Rob's lineup averages 131.9 to Sop's 126.0." },
-    { t: "{sebas} goes for five straight vs {sam}", s: "Bomb Squad climbed from 1-5 to 5-5. Sam is 6-4 and the 4 seed. Sebas has the best lineup average of the week at 135.9, Sam is at 121.8." },
-    { t: "{ron} has lost three straight", s: "And now he gets {kurt}, who has won three in a row. Ron's lineup averages 109.8, the lowest of the week. Kurt's is at 126.8." },
-    { t: "{paul} goes for two in a row", s: "He got off the schneid last week. {dom} is 5-5 and the 7 seed, one spot out, and their lineups are basically even (115.2 to 114.1)." }
+    { t: "{sam} vs {sop} with seeds 4 and 5 on the line", s: "Sam is 7-4 and has won three straight. Sop snapped his four-game skid and climbed to 6-5. Sop's lineup averages 125.3 to Sam's 120.8, and Sam has benched 70.32 from Dak Prescott the last two weeks." },
+    { t: "{kurt} goes for five straight vs {dom}", s: "Kurt has won four in a row and put up the top score of Week 11. Dom holds the last playoff spot at 6-5, one game up on Sebas. Kurt's lineup averages 124.7, Dom's is at 116.5." },
+    { t: "{rob} vs {ron}, both 4-7", s: "Both are two games out of 6th with three to play, so the loser is hanging by a thread. Rob has lost three straight, Ron has lost four. Rob's lineup averages 127.2, Ron's is the lowest of the week at 100.6." },
+    { t: "{paul} gets {jaxon} without Puka", s: "Paul is 1-10. Jaxon is 7-4 with Puka Nacua on IR and Kenneth Walker III questionable, and the lineups are close (120.4 to 118.1)." }
   ]
 };
 /* RECAPS[year][week] = [{ a, b, t: headline, x: write-up }]. a/b match the game's managers in any order. */
 const RECAPS = { 2026: {
+  11: [
+    { a: "jaxon", b: "jp", t: "#GILLMODE wins without Puka, 3Time drops two straight",
+      x: "No Puka Nacua and a zero from Kenneth Walker III on the bench, and Jaxon still won by 13.64 with balance: Joe Burrow (19.9), Derrick Henry (19.1), George Kittle (18.4) and Parker Washington (18.3). CeeDee Lamb put up 30.2 for JP, but Jaylen Warren gave him 4.9 and Josh Allen had 12.16 while Jared Goff scored 20.36 on the bench. Start Goff and JP still loses by 5.44. Jaxon goes to 7-4 and takes over the league lead in points. JP has lost two straight but holds the 1 seed at 8-3." },
+    { a: "sop", b: "rob", t: "Rob flips the Coker/Tyson call and it flips on him",
+      x: "Ashton Jeanty went for 27.9 and Chris Olave added 19.2, and Sop snapped his four-game losing streak with a 1.0 from his kicker. Rob had the pieces. Last week he started Jalen Coker over Jordyn Tyson and lost. This week he started Tyson (2.0) over Coker (8.7), and T.J. Hockenson scored 11.5 on the bench while Isaiah Likely gave him 4.5. Make both swaps and Rob wins by 1.64. Sop is 6-5 and up to the 5 seed, Rob has lost three straight and sits 8th at 4-7." },
+    { a: "kurt", b: "ron", t: "Kurt finally starts Mahomes and wins anyway",
+      x: "After three straight wins with Patrick Mahomes on the bench, Kurt started him and got 24.96. DJ Moore (23.1), Bucky Irving (19.0) and Malik Nabers (18.5) helped him to 141.36, the top score of the week. Ron put up the second-best score of the week and lost. Jonah Coleman went for 34.9 and Sunday pickup Fernando Mendoza gave him 22.88, but Dalton Kincaid scored a zero at TE and Courtland Sutton, also added Sunday, scored a zero at FLEX. Noah Fant's 3.9 off the bench still leaves him 3.78 short. Kurt has won four straight at 7-4, Ron has lost four straight at 4-7." },
+    { a: "sam", b: "sebas", t: "Bomb Squad's streak ends at four, whale parlay goes to Sebas",
+      x: "Travis Kelce (25.4), Brock Purdy (22.2) and Jameson Williams (19.3) did it for Sam, who left Dak Prescott's 35.9 on the bench for the second straight week and still won by 33.86. Ja'Marr Chase's run of 30-point weeks ended at three with an 8.1, and Sebas scored 90.74, the low of the week. Mike Evans put up 22.9 on his bench while Cam Skattebo got 5.8 at FLEX, but that only gets him within 16.76. Sam is 7-4 with three straight wins and still the fewest points allowed in the league. Sebas drops to 5-6 and out of the playoff spots in 7th." },
+    { a: "dom", b: "paul", t: "Paul benches Ladd's 20.7 and stays at one win",
+      x: "Emmett Johnson (24.3) and George Pickens (23.8, started this time) carried Dom to 109.84. Dom also benched C.J. Stroud's 20.46 for Trevor Lawrence's 12.74 again, and it didn't matter. Paul got 26.0 from Chuba Hubbard and 19.0 from Breece Hall, but Brock Bowers scored a zero at TE and Tre Tucker gave him 7.0 at WR while Ladd McConkey dropped 20.7 on the bench. That swap alone wins it by 2.84. Dom has won two straight and holds the 6 seed at 6-5. Paul is 1-10." }
+  ],
   10: [
     { a: "kurt", b: "sop", t: "Sop's perfect lineup still loses by 0.48",
       x: "Amon-Ra St. Brown (25.8), Blake Corum (20.9) and Jayden Daniels (20.76) carried Kurt to 147.76, and Cam Little added 19 at kicker. Patrick Mahomes scored 35.42 on his bench, the third straight week Kurt has sat him and won. Christian McCaffrey dropped 46.3, but Drake Maye gave Sop 3.02 at QB. Start Tyler Shough, Tony Pollard (23.9) and Alvin Kamara (16.4) and Sop gets to 147.28, still 0.48 short. Kurt has won three straight at 6-4, Sop has lost four straight at 5-5." },
@@ -161,16 +173,16 @@ const RECAPS = { 2026: {
 
 /* Power ranking blurbs, 2026 */
 const BLURBS = {
-  jp: "8-2 and still two games clear with the most points in the league. Sam snapped the streak, and Jaxon is next in a 1 vs 2 game.",
-  jaxon: "6-4 and holding the 2 seed on points. Burrow went for 33.16, but Kraft and Zvada combined for 4.9 in a 14.32 loss.",
-  kurt: "Three straight wins, 6-4, 3 seed. Benched 35.42 from Mahomes and won by 27.94. At this point it's a strategy.",
-  sam: "The JSN trade paid off in week one with 31.1 from his new WR1. 6-4, 4 seed, and still the fewest points allowed in the league.",
-  sebas: "Four straight wins. Went from 1-5 to 5-5 and the 5 seed. Ja'Marr Chase has 30-plus in three straight weeks.",
-  sop: "Four straight losses. The defending champ is 5-5, hanging on to the 6 seed, and even his perfect lineup would have lost by 0.48.",
-  dom: "Left 43.5 from George Pickens on the bench and still won. 5-5, but sits 7th behind Sop on points.",
-  rob: "Started Jalen Coker (0.3) over Jordyn Tyson (19.0) and lost by 16.2. 4-6 and 8th.",
-  ron: "Traded JSN, scored 82.7, lost to the winless team. 4-6 with the league's low score two weeks running.",
-  paul: "WHEN THEY GO? Week 10, apparently. First win of the year with the lowest winning score of the season. 1-9 and still 3 games out of 9th."
+  jp: "8-3 and still the 1 seed, but two straight losses cut the lead to one game, and Jaxon took the points crown.",
+  jaxon: "7-4 and now first in points at 1450.70. Beat JP without Puka Nacua and with Kenneth Walker III scoring a zero on the bench.",
+  kurt: "Four straight wins and the top score of Week 11. Started Mahomes for once and got 24.96. 7-4, 3 seed.",
+  sam: "Three straight wins, 7-4, fewest points allowed in the league. Has benched 70.32 from Dak the last two weeks and won both.",
+  sop: "Losing streak over at four. Jeanty's 27.9 got the defending champ back to 6-5 and up to the 5 seed.",
+  dom: "Two straight wins and the last playoff spot at 6-5. Still starting Lawrence over Stroud, still getting away with it.",
+  sebas: "The four-game streak is over. Scored 90.74, the low of the week, and slid to 7th at 5-6. The whale parlay is his.",
+  rob: "Started Tyson over Coker this time and got burned the other way. Two lineup swaps would have won it by 1.64. 4-7 and 8th.",
+  ron: "Scored 133.68, the second-best of the week, and still lost. Four straight losses, 4-7. Two zeros in the lineup will do that.",
+  paul: "Benched Ladd McConkey's 20.7 and lost by 10.86. 1-10 and three games back of 9th with three to play."
 };
 
 /* Playoffs: 6 teams. Week 15 quarterfinals (3v6, 4v5), seeds 1 and 2 on bye.

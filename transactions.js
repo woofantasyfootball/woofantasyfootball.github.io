@@ -1,4 +1,4 @@
-/* 2026 league transactions from ESPN's activity feed (adds, drops, waiver claims, trades), pulled Nov 17 2026.
+/* 2026 league transactions from ESPN's activity feed (adds, drops, waiver claims, trades), pulled Nov 24 2026.
    Format per line: date|kind|manager|addName|addPos|dropName|dropPos   kind: F free agent, W waiver claim, D drop only
    Trades: date|T|from>to>Player|POS~from>to>Player|POS... */
 const TX_RAW = `2026-08-10|F|sop|Jaguars D/ST|DST|Browns D/ST|DST
@@ -164,7 +164,13 @@ const TX_RAW = `2026-08-10|F|sop|Jaguars D/ST|DST|Browns D/ST|DST
 2026-11-18|W|rob|Tyler Bass|K|Andre Szmyt|K
 2026-11-18|F|sop|Kirk Cousins|QB|Drake Maye|QB
 2026-11-18|F|sop|Ryan Flournoy|WR|Germie Bernard|WR
-2026-11-18|F|dom|Lions D/ST|DST|Colts D/ST|DST`;
+2026-11-18|F|dom|Lions D/ST|DST|Colts D/ST|DST
+2026-11-18|F|paul|Cameron Dicker|K|Jake Ferguson|TE
+2026-11-19|F|kurt|Broncos D/ST|DST|Seahawks D/ST|DST
+2026-11-20|F|sop|Elic Ayomanor|WR|Ryan Flournoy|WR
+2026-11-22|F|jaxon|Kenny Gainwell|RB|Giants D/ST|DST
+2026-11-22|F|ron|Fernando Mendoza|QB|
+2026-11-22|F|ron|Courtland Sutton|WR|`;
 const TX = TX_RAW.split("\n").map((l) => {
   const f = l.split("|"), date = f[0], kind = f[1];
   if (kind === "T") {
